@@ -3,11 +3,7 @@ package com.example.tp_gontrandlefletan;
 
 public abstract class ObjetDuJeu {
 
-    public void draw(){
+    public abstract void draw();
 
-    }
-
-    public void update(){
-
-    }
+    public abstract void update();
 }
