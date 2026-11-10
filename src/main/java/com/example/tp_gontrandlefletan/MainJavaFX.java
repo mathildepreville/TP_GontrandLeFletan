@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class MainJavaFX extends Application {
@@ -74,7 +75,6 @@ public class MainJavaFX extends Application {
 
         fenetreOG.setAlignment(Pos.CENTER);//positionner le vbox dans le centre de la fenetre
         fenetreOG.setStyle("-fx-background-color: #4564c1");
-        
         pane.getChildren().add(fenetreOG);
 
 
