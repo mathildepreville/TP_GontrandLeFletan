@@ -29,6 +29,15 @@ public class MainJavaFX extends Application {
         imgGontrand= new Image("gontrand.png");
         var viewGontrandOg = new ImageView(imgGontrand);//image de gontrand lorsquon ouvre le jeu
 
+        var algues1 = new ImageView(new Image("decor3.png"));
+        var algues2 = new ImageView(new Image("decor5.png"));
+        var algues3 = new ImageView(new Image("decor1.png"));
+        var algues4 = new ImageView(new Image("decor6.png"));
+        var algues5 = new ImageView(new Image("decor2.png"));
+        var algues6 = new ImageView(new Image("decor3.png"));
+        var algues7 = new ImageView(new Image("decor6.png"));
+
+        var decorAlguesOg = new HBox(
 
 
 
