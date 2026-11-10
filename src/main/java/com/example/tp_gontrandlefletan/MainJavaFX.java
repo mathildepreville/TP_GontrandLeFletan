@@ -25,6 +25,8 @@ public class MainJavaFX extends Application {
                 partie.draw(context);
             }
         };
+        timer.start();
+
 
         stage.setTitle("Hello!");
         stage.setScene(scene);
