@@ -20,6 +20,25 @@ public class MainJavaFX extends Application {
         var scene = new Scene(pane, WIDTH, HEIGHT);
         var canvas = new Canvas(WIDTH, HEIGHT);
 
+
+
+        var fenetreOG = new VBox();//VBox principal de la fenetre douverture
+
+        var titre = new Label("Gontrand le Flétan");//titre en haut
+
+        imgGontrand= new Image("gontrand.png");
+        var viewGontrandOg = new ImageView(imgGontrand);//image de gontrand lorsquon ouvre le jeu
+
+
+
+
+
+
+        fenetreOG.setAlignment(Pos.CENTER);
+
+
+
+
         pane.getChildren().add(canvas);
 
         stage.setTitle("Gontrand le flétan");
