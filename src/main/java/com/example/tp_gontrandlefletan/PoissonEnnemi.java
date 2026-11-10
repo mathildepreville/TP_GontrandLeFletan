@@ -1,10 +1,12 @@
 package com.example.tp_gontrandlefletan;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 public class PoissonEnnemi extends ObjetDuJeu{
 
-    public PoissonEnnemi() {
+    public PoissonEnnemi(Point2D velocite, Point2D position, Point2D acceleration) {
+        super(velocite, position, acceleration);
     }
 
     @Override
