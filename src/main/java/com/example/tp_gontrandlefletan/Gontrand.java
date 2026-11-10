@@ -1,6 +1,12 @@
 package com.example.tp_gontrandlefletan;
 
-public class Gontrand extends Poisson{
+import javafx.scene.canvas.GraphicsContext;
+
+public class Gontrand extends ObjetDuJeu{
+
+    public Gontrand() {
+    }
+
     @Override
     public void update(double deltaTemps) {
 
@@ -8,7 +14,7 @@ public class Gontrand extends Poisson{
 
 
     @Override
-    public void draw(){
+    public void draw((GraphicsContext context){
 
     }
 }
