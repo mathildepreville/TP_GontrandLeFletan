@@ -1,5 +1,6 @@
 package com.example.tp_gontrandlefletan;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Random;
@@ -10,7 +11,7 @@ public class Partie {
     Random rnd = new Random();
 
     Partie(){
-        gontrand = new Gontrand();
+        gontrand = new Gontrand(new Point2D(0,0), new Point2D(0,0),new Point2D(0,0));
         poissonEnnemis = new PoissonEnnemi[rnd.nextInt(0,6)];
     }
 
