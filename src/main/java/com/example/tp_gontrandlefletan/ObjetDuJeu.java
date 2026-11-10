@@ -7,7 +7,7 @@ public abstract class ObjetDuJeu {
 
     }
 
-    public void update(){
+    public void update(double deltaTemps){
 
     }
 }

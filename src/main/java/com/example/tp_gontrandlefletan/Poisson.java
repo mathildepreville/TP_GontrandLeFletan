@@ -7,7 +7,7 @@ public abstract class Poisson extends ObjetDuJeu{
     }
 
     @Override
-    public void update() {
+    public void update(double deltaTemps) {
 
     }
 }
