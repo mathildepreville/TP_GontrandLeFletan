@@ -39,6 +39,14 @@ public class MainJavaFX extends Application {
 
         var decorAlguesOg = new HBox(
 
+                algues1,
+                algues2,
+                algues3,
+                algues4,
+                algues5,
+                algues6,
+                algues7
+        );
 
 
 
