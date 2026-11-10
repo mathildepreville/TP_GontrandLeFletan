@@ -2,9 +2,17 @@ package com.example.tp_gontrandlefletan;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -12,6 +20,7 @@ import java.io.IOException;
 public class MainJavaFX extends Application {
 
     public static final int WIDTH = 900, HEIGHT = 520;
+    Image imgGontrand;
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -20,9 +29,6 @@ public class MainJavaFX extends Application {
         var scene = new Scene(pane, WIDTH, HEIGHT);
         var canvas = new Canvas(WIDTH, HEIGHT);
 
-
-
-        var fenetreOG = new VBox();//VBox principal de la fenetre douverture
 
         var titre = new Label("Gontrand le Flétan");//titre en haut
 
@@ -48,10 +54,27 @@ public class MainJavaFX extends Application {
                 algues7
         );
 
+        var btnJouer = new Button("Jouer!");
+        var btnInfo = new Button("Infos");
 
+        var lesBouttonsOg = new HBox(
 
+                btnJouer,
+                btnInfo
+        );//placez les boutons horizontalement
 
-        fenetreOG.setAlignment(Pos.CENTER);
+        var fenetreOG = new VBox(
+
+                titre,
+                viewGontrandOg,
+                decorAlguesOg,
+                lesBouttonsOg
+
+        );//VBox principal de la fenetre douverture
+
+        fenetreOG.setAlignment(Pos.CENTER);//positionner le vbox dans le centre de la fenetre
+
+        pane.getChildren().add(fenetreOG);
 
 
 
