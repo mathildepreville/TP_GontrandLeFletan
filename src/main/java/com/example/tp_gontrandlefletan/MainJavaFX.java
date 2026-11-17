@@ -74,6 +74,7 @@ public class MainJavaFX extends Application {
 
         fenetreOG.setAlignment(Pos.CENTER);//positionner le vbox dans le centre de la fenetre
         fenetreOG.setStyle("-fx-background-color: #4564c1");
+        lesBouttonsOg.setAlignment(Pos.CENTER);
         
         pane.getChildren().add(fenetreOG);
 
