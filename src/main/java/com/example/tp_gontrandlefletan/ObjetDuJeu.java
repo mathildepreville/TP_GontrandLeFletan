@@ -4,7 +4,7 @@ package com.example.tp_gontrandlefletan;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.awt.*;
+//import java.awt.*;
 
 public abstract class ObjetDuJeu {
     private Point2D position;

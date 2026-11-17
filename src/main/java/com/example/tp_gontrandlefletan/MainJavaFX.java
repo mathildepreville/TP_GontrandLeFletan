@@ -80,6 +80,9 @@ public class MainJavaFX extends Application {
         pane.getChildren().add(fenetreOG);
 
 
+        // ******** BOUTON INFO *********//
+
+
 
 
         pane.getChildren().add(canvas);
