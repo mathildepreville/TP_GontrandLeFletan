@@ -2,19 +2,26 @@ package com.example.tp_gontrandlefletan;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainJavaFX extends Application {
+
+    public static final int WIDTH = 900, HEIGHT = 520;
     @Override
     public void start(Stage stage) throws IOException {
-<<<<<<< HEAD
-        FXMLLoader fxmlLoader = new FXMLLoader(MainJavaFX.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-=======
+
 
 
         var pane = new Pane();
@@ -22,9 +29,12 @@ public class MainJavaFX extends Application {
         var canvas = new Canvas(WIDTH, HEIGHT);
 
 
+
+        //****** PREMIERE SECTION *******//
+
         var titre = new Label("Gontrand le Flétan");//titre en haut
 
-        imgGontrand= new Image("gontrand.png");
+        var imgGontrand= new Image("gontrand.png");
         var viewGontrandOg = new ImageView(imgGontrand);//image de gontrand lorsquon ouvre le jeu
 
         var algues1 = new ImageView(new Image("decor3.png"));
@@ -75,7 +85,7 @@ public class MainJavaFX extends Application {
         pane.getChildren().add(canvas);
 
         stage.setTitle("Gontrand le flétan");
->>>>>>> parent of 14a5ad4 (imports)
+
         stage.setScene(scene);
         stage.show();
     }
