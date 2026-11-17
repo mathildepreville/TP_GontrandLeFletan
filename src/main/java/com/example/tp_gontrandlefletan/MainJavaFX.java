@@ -19,12 +19,14 @@ import java.io.IOException;
 public class MainJavaFX extends Application {
 
     public static final int WIDTH = 900, HEIGHT = 520;
+    Image imgGontrand;
+    Pane pane;
     @Override
     public void start(Stage stage) throws IOException {
 
 
 
-        var pane = new Pane();
+        pane = new Pane();
         var scene = new Scene(pane, WIDTH, HEIGHT);
         var canvas = new Canvas(WIDTH, HEIGHT);
 
@@ -34,7 +36,7 @@ public class MainJavaFX extends Application {
 
         var titre = new Label("Gontrand le Flétan");//titre en haut
 
-        var imgGontrand= new Image("gontrand.png");
+        imgGontrand= new Image("gontrand.png");
         var viewGontrandOg = new ImageView(imgGontrand);//image de gontrand lorsquon ouvre le jeu
 
         var algues1 = new ImageView(new Image("decor3.png"));
@@ -46,7 +48,6 @@ public class MainJavaFX extends Application {
         var algues7 = new ImageView(new Image("decor6.png"));
 
         var decorAlguesOg = new HBox(
-
                 algues1,
                 algues2,
                 algues3,
@@ -60,18 +61,15 @@ public class MainJavaFX extends Application {
         var btnInfo = new Button("Infos");
 
         var lesBouttonsOg = new HBox(
-
                 btnJouer,
                 btnInfo
         );//placez les boutons horizontalement
 
         var fenetreOG = new VBox(
-
                 titre,
                 viewGontrandOg,
                 decorAlguesOg,
                 lesBouttonsOg
-
         );//VBox principal de la fenetre douverture
 
         fenetreOG.setAlignment(Pos.CENTER);//positionner le vbox dans le centre de la fenetre
@@ -80,7 +78,16 @@ public class MainJavaFX extends Application {
         pane.getChildren().add(fenetreOG);
 
 
-        // ******** BOUTON INFO *********//
+
+
+
+
+
+        // ******** FENETRE INFO *********//
+
+        btnInfo.setOnAction(event -> {
+            afficherFenetreInfos();
+        });
 
 
 
@@ -91,5 +98,16 @@ public class MainJavaFX extends Application {
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void afficherFenetreInfos(){
+        var titre = new Label("Gontrand le Flétan");//titre en haut
+        imgGontrand = new Image("poisson.png");
+
+        var fenetreInfo= new VBox(
+                titre
+        );
+        pane.getChildren().add(fenetreInfo);
+
     }
 }
