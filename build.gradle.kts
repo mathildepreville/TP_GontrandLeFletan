@@ -27,7 +27,7 @@ tasks.withType<JavaCompile> {
 
 application {
     mainModule.set("com.example.tp_gontrandlefletan")
-    mainClass.set("com.example.tp_gontrandlefletan.HelloApplication")
+    mainClass.set("com.example.tp_gontrandlefletan.MainJavaFX")
 }
 
 javafx {
