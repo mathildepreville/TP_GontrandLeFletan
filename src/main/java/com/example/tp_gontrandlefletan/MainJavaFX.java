@@ -1,5 +1,6 @@
 package com.example.tp_gontrandlefletan;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,16 +19,23 @@ import java.io.IOException;
 public class MainJavaFX extends Application {
 
     public static final int WIDTH = 900, HEIGHT = 520;
-    Image imgGontrand;
-    Pane pane;
     @Override
     public void start(Stage stage) throws IOException {
 
-
-
-        pane = new Pane();
+        var pane = new Pane();
         var scene = new Scene(pane, WIDTH, HEIGHT);
         var canvas = new Canvas(WIDTH, HEIGHT);
+
+        AnimationTimer timer = new AnimationTimer() {
+            private long dernierTemps = System.nanoTime();
+            @Override
+            public void handle(long temps) {
+                double deltaTemps = (temps - dernierTemps) * 1e-9;
+                Partie partie = new Partie();
+                dernierTemps = temps;
+            }
+        };
+        timer.start();
 
 
 
@@ -35,7 +43,7 @@ public class MainJavaFX extends Application {
 
         var titre = new Label("Gontrand le Flétan");//titre en haut
 
-        imgGontrand= new Image("gontrand.png");
+        var imgGontrand= new Image("gontrand.png");
         var viewGontrandOg = new ImageView(imgGontrand);//image de gontrand lorsquon ouvre le jeu
 
         var algues1 = new ImageView(new Image("decor3.png"));
@@ -47,6 +55,7 @@ public class MainJavaFX extends Application {
         var algues7 = new ImageView(new Image("decor6.png"));
 
         var decorAlguesOg = new HBox(
+
                 algues1,
                 algues2,
                 algues3,
@@ -60,37 +69,24 @@ public class MainJavaFX extends Application {
         var btnInfo = new Button("Infos");
 
         var lesBouttonsOg = new HBox(
+
                 btnJouer,
                 btnInfo
         );//placez les boutons horizontalement
 
         var fenetreOG = new VBox(
+
                 titre,
                 viewGontrandOg,
                 decorAlguesOg,
                 lesBouttonsOg
+
         );//VBox principal de la fenetre douverture
 
         fenetreOG.setAlignment(Pos.CENTER);//positionner le vbox dans le centre de la fenetre
         fenetreOG.setStyle("-fx-background-color: #4564c1");
-        lesBouttonsOg.setAlignment(Pos.CENTER);
         
         pane.getChildren().add(fenetreOG);
-
-
-
-
-
-
-
-        // ******** FENETRE INFO *********//
-
-        btnInfo.setOnAction(event -> {
-            afficherFenetreInfos();
-        });
-
-
-
 
         pane.getChildren().add(canvas);
 
@@ -98,16 +94,5 @@ public class MainJavaFX extends Application {
 
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void afficherFenetreInfos(){
-        var titre = new Label("Gontrand le Flétan");//titre en haut
-        imgGontrand = new Image("poisson.png");
-
-        var fenetreInfo= new VBox(
-                titre
-        );
-        pane.getChildren().add(fenetreInfo);
-
     }
 }
