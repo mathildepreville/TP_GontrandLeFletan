@@ -75,7 +75,7 @@ public class MainJavaFX extends Application {
         var algues6 = new ImageView(new Image("decor3.png"));
         var algues7 = new ImageView(new Image("decor6.png"));
 
-        var decorAlguesOg = new HBox(
+        var decorAlguesOg = new HBox(30,
 
                 algues1,
                 algues2,
@@ -85,6 +85,7 @@ public class MainJavaFX extends Application {
                 algues6,
                 algues7
         );
+        decorAlguesOg.setAlignment(Pos.CENTER);
 
         var btnJouer = new Button("Jouer!");
         btnJouer.setOnAction(e -> {
@@ -92,11 +93,12 @@ public class MainJavaFX extends Application {
         });
         var btnInfo = new Button("Infos");
 
-        var lesBouttonsOg = new HBox(
+        var lesBouttonsOg = new HBox(30,
 
                 btnJouer,
                 btnInfo
         );//placez les boutons horizontalement
+        lesBouttonsOg.setAlignment(Pos.CENTER);
 
         var fenetreOG = new VBox(
 
@@ -107,7 +109,10 @@ public class MainJavaFX extends Application {
 
         );//VBox principal de la fenetre douverture
 
-        fenetreOG.setAlignment(Pos.CENTER);//positionner le vbox dans le centre de la fenetre
+        fenetreOG.setPrefSize(WIDTH, HEIGHT);
+        fenetreOG.setFillWidth(true);
+        fenetreOG.setAlignment(Pos.CENTER);
+        fenetreOG.setSpacing(25);
         fenetreOG.setStyle("-fx-background-color: #4564c1");
         
         paneMenu.getChildren().add(fenetreOG);
