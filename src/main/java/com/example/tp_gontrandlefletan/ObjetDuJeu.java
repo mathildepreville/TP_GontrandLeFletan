@@ -46,4 +46,28 @@ public abstract class ObjetDuJeu {
     public Point2D getCentre() {
         return position.add(taille.multiply(1/2.0));
     }
+
+    public Point2D getPosition() {
+        return position;
+    }
+
+    public void setPosition(Point2D position) {
+        this.position = position;
+    }
+
+    public Point2D getVelocite() {
+        return velocite;
+    }
+
+    public void setVelocite(Point2D velocite) {
+        this.velocite = velocite;
+    }
+
+    public Point2D getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(Point2D acceleration) {
+        this.acceleration = acceleration;
+    }
 }

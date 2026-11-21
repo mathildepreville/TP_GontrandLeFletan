@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 
 public class Gontrand extends ObjetDuJeu{
 
-    private static final double vitesseMax = 300;
+    private static final double VITESSE_MAX = 300;
 
     public Gontrand(Point2D velocite, Point2D position, Point2D acceleration, Point2D taille, Image image) {
         super(velocite, position, acceleration, taille, image);
@@ -21,5 +21,25 @@ public class Gontrand extends ObjetDuJeu{
     public void update(double deltaTemps) {
         super.update(deltaTemps);
 
+    }
+
+    public void allerGauche(){
+        velocite = new Point2D(-300,0);
+    }
+
+    public void allerDroite(){
+        velocite = new Point2D(300, 0);
+    }
+
+    public void allerHaut(){
+        velocite = new Point2D(0,-300);
+    }
+
+    public void allerBas(){
+        velocite = new Point2D(0,300);
+    }
+
+    public void arreter(){
+        velocite = new Point2D(0,0);
     }
 }

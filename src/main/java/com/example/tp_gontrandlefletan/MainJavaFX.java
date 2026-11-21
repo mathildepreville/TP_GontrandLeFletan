@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,16 +23,36 @@ public class MainJavaFX extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        var pane = new Pane();
-        var scene = new Scene(pane, WIDTH, HEIGHT);
+        var paneMenu = new Pane();
+        var sceneMenu = new Scene(paneMenu, WIDTH, HEIGHT);
+        var paneJeu = new Pane();
+        var sceneJeu = new Scene(paneJeu,WIDTH,HEIGHT);
+
         var canvas = new Canvas(WIDTH, HEIGHT);
+
+        GraphicsContext context = canvas.getGraphicsContext2D();
+        Partie partie = new Partie();
+        sceneJeu.setOnKeyPressed(e->{
+            switch (e.getCode()){
+                case W -> partie.getGontrand().allerHaut();
+                case S -> partie.getGontrand().allerBas();
+                case A -> partie.getGontrand().allerGauche();
+                case D -> partie.getGontrand().allerDroite();
+            }
+        });
+
+        sceneJeu.setOnKeyReleased(e->{
+            partie.getGontrand().arreter();
+        });
 
         AnimationTimer timer = new AnimationTimer() {
             private long dernierTemps = System.nanoTime();
             @Override
             public void handle(long temps) {
                 double deltaTemps = (temps - dernierTemps) * 1e-9;
-                Partie partie = new Partie();
+                partie.update(deltaTemps);
+                context.clearRect(0,0,WIDTH,HEIGHT);
+                partie.draw(context);
                 dernierTemps = temps;
             }
         };
@@ -66,6 +87,9 @@ public class MainJavaFX extends Application {
         );
 
         var btnJouer = new Button("Jouer!");
+        btnJouer.setOnAction(e -> {
+            stage.setScene(sceneJeu);
+        });
         var btnInfo = new Button("Infos");
 
         var lesBouttonsOg = new HBox(
@@ -86,13 +110,13 @@ public class MainJavaFX extends Application {
         fenetreOG.setAlignment(Pos.CENTER);//positionner le vbox dans le centre de la fenetre
         fenetreOG.setStyle("-fx-background-color: #4564c1");
         
-        pane.getChildren().add(fenetreOG);
+        paneMenu.getChildren().add(fenetreOG);
 
-        pane.getChildren().add(canvas);
+        paneJeu.getChildren().add(canvas);
 
         stage.setTitle("Gontrand le flétan");
 
-        stage.setScene(scene);
+        stage.setScene(sceneMenu);
         stage.show();
     }
 }
