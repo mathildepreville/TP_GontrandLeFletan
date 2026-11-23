@@ -25,9 +25,11 @@ public class MainJavaFX extends Application {
     public void start(Stage stage) throws IOException {
 
         var paneMenu = new Pane();
-        var sceneMenu = new Scene(paneMenu, WIDTH, HEIGHT);
+        var sceneMenu = new Scene(paneMenu, WIDTH, HEIGHT);//création d'une scene pour le menu principal
         var paneJeu = new Pane();
-        var sceneJeu = new Scene(paneJeu,WIDTH,HEIGHT);
+        var sceneJeu = new Scene(paneJeu,WIDTH,HEIGHT);// création d'une scene pour la fenetre de jeu
+        var paneInfo = new Pane();
+        var sceneInfo = new Scene(paneInfo, WIDTH, HEIGHT);// création d'une scene pour la fenetre d'informations
 
         var canvas = new Canvas(WIDTH, HEIGHT);
 
@@ -62,7 +64,7 @@ public class MainJavaFX extends Application {
 
 
 
-        //****** PREMIERE SECTION *******//
+        //****** PREMIERE SECTION (menu principal) *******//
 
         var logo = new ImageView (new Image("logo.png"));
         logo.setFitWidth(380);
@@ -73,7 +75,12 @@ public class MainJavaFX extends Application {
         btnJouer.setOnAction(e -> {
             stage.setScene(sceneJeu);
         });
+
         var btnInfo = new Button("Infos");
+        btnInfo.setOnAction(e -> {
+            stage.setScene(sceneInfo);
+        });
+
 
         var lesBouttonsOg = new HBox(30,
 
@@ -88,6 +95,46 @@ public class MainJavaFX extends Application {
                 lesBouttonsOg
 
         );//VBox principal de la fenetre douverture
+
+        //********** DEUXIEME SECTION (menu informations) *********//
+
+
+        var titreInfo = new Label("Gontrand le flétan");
+
+        var poissonInfos = new ImageView(new Image("poisson2.png"));
+        poissonInfos.setFitWidth(380);
+        poissonInfos.setPreserveRatio(true);
+
+        var texteInfo = new Label(
+                "Par   \n" +
+                        "et   Mathilde Préville \n"
+
+        );
+
+        var btnRetour = new Button("Retour");
+
+        btnRetour.setOnAction(e -> {
+            stage.setScene(sceneMenu);
+        });
+
+        var fenetreInfo = new VBox(
+                25,
+                titreInfo,
+                poissonInfos,
+                texteInfo,
+                btnRetour
+        );
+
+        fenetreInfo.setAlignment(Pos.CENTER);
+        fenetreInfo.setPrefSize(WIDTH, HEIGHT);
+        fenetreInfo.setStyle("-fx-background-color: #2A7FFF;");
+
+        titreInfo.setStyle("-fx-font-size: 30px; -fx-font-weight: bold;");
+        texteInfo.setStyle("-fx-font-size: 18px; -fx-text-alignment: center;");
+
+        paneInfo.getChildren().add(fenetreInfo);
+
+
 
         fenetreOG.setPrefSize(WIDTH, HEIGHT);
         fenetreOG.setFillWidth(true);
