@@ -77,7 +77,27 @@ public class MainJavaFX extends Application {
         });
 
         var btnInfo = new Button("Infos");
+
+        // Images des poissons ennemis
+        String[] poissons = {
+                "poisson1.png",
+                "poisson2.png",
+                "poisson3.png",
+                "poisson4.png",
+                "poisson5.png"
+        };
+
+        ImageView poissonInfos = new ImageView();
+
         btnInfo.setOnAction(e -> {
+            int hasard = (int)(Math.random() * poissons.length);
+
+            poissonInfos.setImage(
+                    new Image(getClass().getResourceAsStream(
+                            "/" + poissons[hasard]
+                    ))
+            );
+
             stage.setScene(sceneInfo);
         });
 
@@ -100,28 +120,53 @@ public class MainJavaFX extends Application {
 
 
         var titreInfo = new Label("Gontrand le flétan");
+        titreInfo.setStyle(
+                "-fx-font-size: 42px;" +
+                "-fx-font-weight: bold;"
+        );
 
-        var poissonInfos = new ImageView(new Image("poisson2.png"));
-        poissonInfos.setFitWidth(380);
+
+        poissonInfos.setFitWidth(150);
         poissonInfos.setPreserveRatio(true);
 
-        var texteInfo = new Label(
-                "Par   \n" +
-                        "et   Mathilde Préville \n"
+        // Noms des membres de l'équipe
+        var equipe = new Label(
+                "Par   Mathilde Préville\n" +
+                "et   "
 
         );
 
+        equipe.setStyle(
+                "-fx-font-size: 20px;" +
+                " -fx-text-alignment: center;");
+
+        // Texte explicatif
+        var explication = new Label(
+                "Travail remis et adapté à Raouf Babari, Graphismes adaptés de https://game-icons.net/ et de\n" +
+                        "https://openclipart.org/. Développé dans le cardre du cours 420-SF3-RE. Développement d'applications dans un \n" +
+                        "environnement graphique au Collège de Bois-de-Boulogne."
+        );
+
+        explication.setStyle(
+                "-fx-font-size: 16px;" +
+                "-fx-text-alignment: center;"
+        );
+
+
+        // Bouton retour
         var btnRetour = new Button("Retour");
 
         btnRetour.setOnAction(e -> {
             stage.setScene(sceneMenu);
         });
 
+        //Organisation des élémentas
         var fenetreInfo = new VBox(
                 25,
                 titreInfo,
                 poissonInfos,
-                texteInfo,
+                equipe,
+                explication,
                 btnRetour
         );
 
@@ -129,8 +174,6 @@ public class MainJavaFX extends Application {
         fenetreInfo.setPrefSize(WIDTH, HEIGHT);
         fenetreInfo.setStyle("-fx-background-color: #2A7FFF;");
 
-        titreInfo.setStyle("-fx-font-size: 30px; -fx-font-weight: bold;");
-        texteInfo.setStyle("-fx-font-size: 18px; -fx-text-alignment: center;");
 
         paneInfo.getChildren().add(fenetreInfo);
 
