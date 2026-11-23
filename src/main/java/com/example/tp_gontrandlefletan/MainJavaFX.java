@@ -67,26 +67,7 @@ public class MainJavaFX extends Application {
         var logo = new ImageView (new Image("logo.png"));
         logo.setFitWidth(380);
         logo.setPreserveRatio(true);
-//
-//        var algues1 = new ImageView(new Image("decor3.png"));
-//        var algues2 = new ImageView(new Image("decor5.png"));
-//        var algues3 = new ImageView(new Image("decor1.png"));
-//        var algues4 = new ImageView(new Image("decor6.png"));
-//        var algues5 = new ImageView(new Image("decor2.png"));
-//        var algues6 = new ImageView(new Image("decor3.png"));
-//        var algues7 = new ImageView(new Image("decor6.png"));
-//
-//        var decorAlguesOg = new HBox(30,
-//
-//                algues1,
-//                algues2,
-//                algues3,
-//                algues4,
-//                algues5,
-//                algues6,
-//                algues7
-//        );
-//        decorAlguesOg.setAlignment(Pos.CENTER);
+
 
         var btnJouer = new Button("Jouer!");
         btnJouer.setOnAction(e -> {
@@ -104,7 +85,6 @@ public class MainJavaFX extends Application {
         var fenetreOG = new VBox(
 
                 logo,
-//                decorAlguesOg,
                 lesBouttonsOg
 
         );//VBox principal de la fenetre douverture
