@@ -24,19 +24,19 @@ public class Gontrand extends ObjetDuJeu{
     }
 
     public void allerGauche(){
-        velocite = new Point2D(-300,0);
+        velocite = new Point2D(-VITESSE_MAX,0);
     }
 
     public void allerDroite(){
-        velocite = new Point2D(300, 0);
+        velocite = new Point2D(VITESSE_MAX, 0);
     }
 
     public void allerHaut(){
-        velocite = new Point2D(0,-300);
+        velocite = new Point2D(0,-VITESSE_MAX);
     }
 
     public void allerBas(){
-        velocite = new Point2D(0,300);
+        velocite = new Point2D(0,VITESSE_MAX);
     }
 
     public void arreter(){
