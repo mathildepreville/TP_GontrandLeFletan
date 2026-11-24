@@ -37,10 +37,10 @@ public class MainJavaFX extends Application {
         Partie partie = new Partie();
         sceneJeu.setOnKeyPressed(e->{
             switch (e.getCode()){
-                case W -> partie.getGontrand().allerHaut();
-                case S -> partie.getGontrand().allerBas();
-                case A -> partie.getGontrand().allerGauche();
-                case D -> partie.getGontrand().allerDroite();
+                case UP -> partie.getGontrand().allerHaut();
+                case DOWN -> partie.getGontrand().allerBas();
+                case LEFT -> partie.getGontrand().allerGauche();
+                case RIGHT -> partie.getGontrand().allerDroite();
             }
         });
 
@@ -132,7 +132,7 @@ public class MainJavaFX extends Application {
         // Noms des membres de l'équipe
         var equipe = new Label(
                 "Par   Mathilde Préville\n" +
-                "et   "
+                "et   Siya Jeslyn"
 
         );
 
