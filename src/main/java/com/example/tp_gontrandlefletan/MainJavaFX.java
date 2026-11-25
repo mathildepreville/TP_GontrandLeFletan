@@ -35,18 +35,10 @@ public class MainJavaFX extends Application {
 
         GraphicsContext context = canvas.getGraphicsContext2D();
         Partie partie = new Partie();
-        sceneJeu.setOnKeyPressed(e->{
-            switch (e.getCode()){
-                case UP -> partie.getGontrand().allerHaut();
-                case DOWN -> partie.getGontrand().allerBas();
-                case LEFT -> partie.getGontrand().allerGauche();
-                case RIGHT -> partie.getGontrand().allerDroite();
-            }
-        });
 
-        sceneJeu.setOnKeyReleased(e->{
-            partie.getGontrand().arreter();
-        });
+        sceneJeu.setOnKeyPressed(e-> Input.setKeyPressed(e.getCode(),true));
+
+        sceneJeu.setOnKeyReleased(e->Input.setKeyPressed(e.getCode(),false));
 
         AnimationTimer timer = new AnimationTimer() {
             private long dernierTemps = System.nanoTime();

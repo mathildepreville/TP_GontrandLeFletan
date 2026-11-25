@@ -3,10 +3,12 @@ package com.example.tp_gontrandlefletan;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 
 public class Gontrand extends ObjetDuJeu{
 
     private static final double VITESSE_MAX = 300;
+    private static final double ACCELERATION_MAX = 1000;
 
     public Gontrand(Point2D velocite, Point2D position, Point2D acceleration, Point2D taille, Image image) {
         super(velocite, position, acceleration, taille, image);
@@ -19,27 +21,56 @@ public class Gontrand extends ObjetDuJeu{
 
     @Override
     public void update(double deltaTemps) {
+        if(Input.isKeyPressed(KeyCode.RIGHT)){
+            allerDroite();
+        }else if(Input.isKeyPressed(KeyCode.LEFT)){
+            allerGauche();
+        }else{
+            ralentirX();
+        }
+        if(Input.isKeyPressed(KeyCode.UP)){
+            allerHaut();
+        }else if(Input.isKeyPressed(KeyCode.DOWN)){
+            allerBas();
+        }else{
+            ralentirY();
+        }
         super.update(deltaTemps);
 
     }
 
     public void allerGauche(){
-        velocite = new Point2D(-VITESSE_MAX,0);
+        acceleration = new Point2D(-ACCELERATION_MAX,acceleration.getY());
     }
 
     public void allerDroite(){
-        velocite = new Point2D(VITESSE_MAX, 0);
+       acceleration = new Point2D(ACCELERATION_MAX, acceleration.getY());
     }
 
     public void allerHaut(){
-        velocite = new Point2D(0,-VITESSE_MAX);
+        acceleration = new Point2D(acceleration.getX(),-ACCELERATION_MAX);
     }
 
     public void allerBas(){
-        velocite = new Point2D(0,VITESSE_MAX);
+        acceleration = new Point2D(acceleration.getX(),ACCELERATION_MAX);
     }
 
-    public void arreter(){
-        velocite = new Point2D(0,0);
+    public void ralentirX(){
+
+        if(velocite.getX() > 0 && velocite.getX() < 10){
+            velocite = new Point2D(0, velocite.getY());
+            acceleration = new Point2D(0,acceleration.getY());
+            return;
+        }
+        acceleration = new Point2D(-velocite.getX()*5,acceleration.getY() );
+    }
+    public void ralentirY(){
+
+        if(velocite.getY() > 0 && velocite.getY() < 10){
+            velocite = new Point2D(velocite.getX(),0);
+            acceleration = new Point2D(acceleration.getX(),0);
+            return;
+        }
+        acceleration = new Point2D(acceleration.getX(), -velocite.getY()*5);
     }
 }
