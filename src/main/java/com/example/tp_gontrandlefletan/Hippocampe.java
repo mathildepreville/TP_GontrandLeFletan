@@ -25,16 +25,19 @@ public class Hippocampe extends Projectile{
         Random random = new Random();
 
         amplitude = 30 + random.nextDouble() * 30;
+        //random.nextDouble retourne un chiffre decimal random entre 0 et 1
+        //donc amplitude est entre 30 et 60
 
         if (random.nextBoolean()) {
-            amplitude *= -1;
+            amplitude *= -1;//positif ou negatif au hasard
         }
 
-        periode = 1 + random.nextDouble() * 2;
+        periode = 1 + random.nextDouble() * 2;//le nombre de secondes que ça prend pour faire une oscillation complète, choisi au
+        //hasard entre 1.0 et 3.0
 
         tempsEcoule = 0;
 
-        yInitial = position.getY() + taille.getY() / 2.0;
+        yInitial = position.getY() + taille.getY() / 2.0;//position dans le milieu de lhippocampe
     }
 
     @Override
