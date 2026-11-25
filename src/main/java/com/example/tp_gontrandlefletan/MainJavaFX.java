@@ -46,9 +46,9 @@ public class MainJavaFX extends Application {
             if (e.getCode() == KeyCode.P) {
                 enPause = !enPause;//inverse la valeur de enPause
                 if (enPause) {
-                    //pauseOuJouer(true);
+                    pauseOuJouer(true);
                 } else {
-                    //pauseOuJouer(false);
+                    pauseOuJouer(false);
                 }
             }
 
@@ -70,16 +70,6 @@ public class MainJavaFX extends Application {
             }
         };
         timer.start();
-
-        // Escape ouvre le menu principal
-        sceneJeu.setOnKeyPressed(e -> {
-            Input.setKeyPressed(e.getCode(),true);
-            if(e.getCode() == KeyCode.ESCAPE){
-                stage.setScene(sceneMenu);
-            }
-        });
-
-
 
         //****** PREMIERE SECTION (menu principal) *******//
 
@@ -222,5 +212,12 @@ public class MainJavaFX extends Application {
 
         stage.setScene(sceneMenu);
         stage.show();
+    }
+    private void pauseOuJouer(Boolean pause){
+        if(pause==true){
+
+        }else {
+
+        }
     }
 }
