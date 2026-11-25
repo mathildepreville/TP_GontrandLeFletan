@@ -14,9 +14,14 @@ public class Gontrand extends ObjetDuJeu{
         super(velocite, position, acceleration, taille, image);
     }
 
-    @Override
-    public void draw(GraphicsContext context) {
-        super.draw(context);
+    public void draw(GraphicsContext context, Camera camera) {
+        Point2D positionEcran = camera.coordoEcran(position);
+        context.drawImage(
+                image,
+                positionEcran.getX(),
+                positionEcran.getY()
+        );
+        //super.draw(context);
     }
 
     @Override
