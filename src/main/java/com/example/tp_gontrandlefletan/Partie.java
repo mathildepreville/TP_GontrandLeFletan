@@ -3,11 +3,15 @@ package com.example.tp_gontrandlefletan;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Partie {
+    private boolean modeDebug = false;
+    private boolean dAvant = false;
     private Camera camera;
     private Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonEnnemis;
@@ -38,13 +42,26 @@ public class Partie {
         for (PoissonEnnemi poisson : poissonEnnemis) {
             poisson.update(deltaTemps);
         }
-     }
+
+        boolean dMaintenant = Input.isKeyPressed(KeyCode.D);
+
+        if(dMaintenant && !dAvant){
+            modeDebug = !modeDebug;
+        }
+
+        dAvant = dMaintenant;
+    }
 
     public void draw(GraphicsContext context){
         gontrand.draw(context,camera);
 
         for (PoissonEnnemi poisson : poissonEnnemis) {
             poisson.draw(context);
+        }
+
+        if(modeDebug){
+            context.setStroke(Color.YELLOW);
+            context.strokeLine(MainJavaFX.WIDTH*0.2,0,MainJavaFX.WIDTH*0.2,MainJavaFX.HEIGHT);
         }
     }
 
