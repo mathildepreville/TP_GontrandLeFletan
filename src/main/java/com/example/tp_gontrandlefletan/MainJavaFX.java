@@ -66,18 +66,18 @@ public class MainJavaFX extends Application {
         //****** PREMIERE SECTION (menu principal) *******//
 
         var logo = new ImageView (new Image("logo.png"));
-        logo.setFitWidth(380);
-        logo.setPreserveRatio(true);
+        logo.setFitWidth(380);//converti taille de l'image
+        logo.setPreserveRatio(true);//garde le logo intacte sans déformer
 
 
         var btnJouer = new Button("Jouer!");
         btnJouer.setOnAction(e -> {
-            stage.setScene(sceneJeu);
+            stage.setScene(sceneJeu);//ouvre scene jouer
         });
 
         var btnInfo = new Button("Infos");
 
-        // Images des poissons ennemis
+        // Images des poissons ennemis dans un tableau pour que la liste puisse etre parcouru aléatoirement
         String[] poissons = {
                 "poisson1.png",
                 "poisson2.png",
@@ -86,18 +86,18 @@ public class MainJavaFX extends Application {
                 "poisson5.png"
         };
 
-        ImageView poissonInfos = new ImageView();
+        ImageView poissonInfos = new ImageView();//création d'un image view vide ou une poisson aléatoire ira après
 
         btnInfo.setOnAction(e -> {
-            int hasard = (int)(Math.random() * poissons.length);
+            int hasard = (int)(Math.random() * poissons.length);//poisson au hasard est sélectionné
 
             poissonInfos.setImage(
                     new Image(getClass().getResourceAsStream(
                             "/" + poissons[hasard]
-                    ))
+                    ))//le poisson sélectionné au hasard est inséré dans le ImageView
             );
 
-            stage.setScene(sceneInfo);
+            stage.setScene(sceneInfo);//ouvre la scene info
         });
 
 
