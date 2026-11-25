@@ -43,6 +43,17 @@ public class Hippocampe extends Projectile{
 
     @Override
     public void update(double deltaTemps) {
+
+        tempsEcoule += deltaTemps;//accumule le temps depuis la creation de lhippocampe
+
         super.update(deltaTemps);
+
+        double y = amplitude * Math.sin(2 * Math.PI * tempsEcoule / periode)//calcule le deplacement vertical
+                + yInitial;//ajoute pour quil oscille autour de sa position initiale
+
+        position = new Point2D(
+                position.getX(),
+                y - taille.getY() / 2.0
+        );
     }
 }
