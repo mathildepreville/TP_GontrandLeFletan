@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Hippocampe extends Projectile{
@@ -55,5 +56,19 @@ public class Hippocampe extends Projectile{
                 position.getX(),
                 y - taille.getY() / 2.0
         );
+    }
+
+    public static ArrayList<Hippocampe> creerTrio(Point2D centreGontrand) {
+
+        ArrayList<Hippocampe> trio = new ArrayList<>();
+
+        Point2D position = centreGontrand.subtract(new Point2D(20 / 2.0, 36 / 2.0));
+        //place lhippocampe au plein milieu de gontrand
+
+        for (int i = 0; i < 3; i++) {
+            trio.add(new Hippocampe(position));//ajoute trois hippocampes a la arraylist
+        }
+
+        return trio;
     }
 }
