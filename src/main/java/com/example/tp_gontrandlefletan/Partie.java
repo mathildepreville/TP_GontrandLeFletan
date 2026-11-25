@@ -80,6 +80,10 @@ public class Partie {
             context.setStroke(Color.YELLOW);
             context.strokeLine(MainJavaFX.WIDTH*0.2,0,MainJavaFX.WIDTH*0.2,MainJavaFX.HEIGHT);
         }
+
+        for (Projectile projectile : projectiles) {
+            projectile.draw(context);
+        }//dessiner les projectiles
     }
 
     public Gontrand getGontrand(){
