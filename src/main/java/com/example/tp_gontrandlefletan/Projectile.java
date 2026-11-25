@@ -20,4 +20,6 @@ public abstract class Projectile extends ObjetDuJeu{
     public void update(double deltaTemps) {
         super.update(deltaTemps);
     }
+
+    public void lancerProjectile(Baril)
 }

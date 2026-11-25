@@ -22,6 +22,7 @@ import java.io.IOException;
 public class MainJavaFX extends Application {
 
     public static final int WIDTH = 900, HEIGHT = 520;
+    private boolean enPause = false;
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -37,7 +38,22 @@ public class MainJavaFX extends Application {
         GraphicsContext context = canvas.getGraphicsContext2D();
         Partie partie = new Partie();
 
-        sceneJeu.setOnKeyPressed(e-> Input.setKeyPressed(e.getCode(),true));
+        sceneJeu.setOnKeyPressed(e-> {
+            Input.setKeyPressed(e.getCode(), true);
+            if (e.getCode() == KeyCode.ESCAPE) {
+                //Projectile.lancerProjectile();
+            }
+            if (e.getCode() == KeyCode.P) {
+                enPause = !enPause;//inverse la valeur de enPause
+                if (enPause) {
+                    //pauseOuJouer(true);
+                } else {
+                    //pauseOuJouer(false);
+                }
+            }
+
+
+        });
 
         sceneJeu.setOnKeyReleased(e->Input.setKeyPressed(e.getCode(),false));
 
