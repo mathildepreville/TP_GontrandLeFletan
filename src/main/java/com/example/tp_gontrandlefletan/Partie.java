@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.example.tp_gontrandlefletan.BoiteSardines.CHARGE;
+
 public class Partie {
     private boolean modeDebug = false;
     private boolean dAvant = false;
@@ -107,6 +109,28 @@ public class Partie {
         EtoileDeMer etoile = new EtoileDeMer(position);
 
         projectiles.add(etoile);
+    }
+
+    public Point2D champElectrique(ArrayList<PoissonEnnemi> poissons, Point2D position) {
+        Point2D champTotal = Point2D.ZERO;//commencer avec un champ nul
+
+        double k = 8.99e9;
+
+        for (PoissonEnnemi poisson : poissons) {
+
+            Point2D direction = position.subtract(poisson.getCentre());
+
+            double distance = Math.max(1, direction.magnitude());
+
+            double module = k * CHARGE / (distance * distance);
+
+            Point2D champ = direction.normalize().multiply(-module);
+
+            champTotal = champTotal.add(champ);
+        }
+
+
+        return champTotal;
     }
 
 }

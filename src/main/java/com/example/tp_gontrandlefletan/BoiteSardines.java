@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class BoiteSardines extends Projectile{
 
-    private static final double CHARGE = 900;
+    public static final double CHARGE = 900;
     private static final double VITESSE_MAX = 400;
 
     public BoiteSardines(Point2D position) {
@@ -20,12 +20,10 @@ public class BoiteSardines extends Projectile{
         );
     }
 
-    public void update(double deltaTemps, ArrayList<PoissonEnnemi> poissons, double hauteurJeu) {
-
-        //Point2D champ = champElectrique(poissons, getCentre());
+    public void update(double deltaTemps, Point2D champ, double hauteurJeu) {
 
         // Calcul de l'accélération électrique
-        //acceleration = champ.multiply(CHARGE);
+        acceleration = champ.multiply(CHARGE);
 
         // Mise à jour de la vitesse et de la position
         super.update(deltaTemps);
