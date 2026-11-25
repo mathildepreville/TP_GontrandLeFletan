@@ -63,7 +63,7 @@ public class Partie {
                 "poisson5.png"
         };
 
-        String imageChoisi = choixImages[rnd.nextInt(choixImages.length)];
+        String imageChoisi = choixImages[rnd.nextInt(choixImages.length)];//choisi un poisson au hasard
 
         // Position aléatoire à droite de l'écran.
         double x = rnd.nextDouble(900, 1200);
