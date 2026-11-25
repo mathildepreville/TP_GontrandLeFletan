@@ -52,6 +52,21 @@ public class Partie {
         }
 
         dAvant = dMaintenant;
+
+        for (Projectile projectile : projectiles) {
+
+            if (projectile instanceof BoiteSardines sardine) {
+
+                Point2D champ = champElectrique(poissonEnnemis, sardine.getCentre());
+                //update les boitesSardines en fonction des poissonEnnemis et du centre de la boite
+
+                sardine.update(deltaTemps, champ, MainJavaFX.HEIGHT);
+
+            } else {
+
+                projectile.update(deltaTemps);//update le reste des projectils en appelant leur methode update respective
+            }
+        }
     }
 
     public void draw(GraphicsContext context){
