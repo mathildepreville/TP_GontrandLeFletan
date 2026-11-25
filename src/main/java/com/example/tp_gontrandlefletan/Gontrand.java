@@ -21,6 +21,7 @@ public class Gontrand extends ObjetDuJeu{
 
     @Override
     public void update(double deltaTemps) {
+        // gérer les touches
         if(Input.isKeyPressed(KeyCode.RIGHT)){
             allerDroite();
         }else if(Input.isKeyPressed(KeyCode.LEFT)){
@@ -36,6 +37,20 @@ public class Gontrand extends ObjetDuJeu{
             ralentirY();
         }
         super.update(deltaTemps);
+        // vitesse max en X
+        if (Math.abs(velocite.getX()) > VITESSE_MAX) {
+            velocite = new Point2D(
+                    Math.signum(velocite.getX()) * VITESSE_MAX,
+                    velocite.getY()
+            );
+        }
+        // vitesse max en Y
+        if (Math.abs(velocite.getY()) > VITESSE_MAX) {
+            velocite = new Point2D(
+                    velocite.getX(),
+                    Math.signum(velocite.getY()) * VITESSE_MAX
+            );
+        }
 
     }
 
