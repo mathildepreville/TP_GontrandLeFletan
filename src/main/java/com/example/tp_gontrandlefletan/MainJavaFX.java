@@ -54,6 +54,13 @@ public class MainJavaFX extends Application {
         };
         timer.start();
 
+        // Escape ouvre le menu principal
+        sceneJeu.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("ESCAPE")) {
+                stage.setScene(sceneMenu);
+            }
+        });
+
 
 
         //****** PREMIERE SECTION (menu principal) *******//
@@ -107,6 +114,19 @@ public class MainJavaFX extends Application {
                 lesBouttonsOg
 
         );//VBox principal de la fenetre douverture
+
+        fenetreOG.setPrefSize(WIDTH, HEIGHT);
+        fenetreOG.setFillWidth(true);
+        fenetreOG.setAlignment(Pos.CENTER);
+        fenetreOG.setSpacing(25);
+        fenetreOG.setStyle("-fx-background-color:#2A7FFF");
+
+        // Escape ferme le programme lorsqu'on est dans la scene du menu principal
+        sceneMenu.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("ESCAPE")) {
+                stage.close();
+            }
+        });
 
         //********** DEUXIEME SECTION (menu informations) *********//
 
@@ -166,16 +186,15 @@ public class MainJavaFX extends Application {
         fenetreInfo.setPrefSize(WIDTH, HEIGHT);
         fenetreInfo.setStyle("-fx-background-color: #2A7FFF;");
 
+        // Escape ouvre le menu principal
+        sceneInfo.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("ESCAPE")) {
+                stage.setScene(sceneMenu);
+            }
+        });
+
 
         paneInfo.getChildren().add(fenetreInfo);
-
-
-
-        fenetreOG.setPrefSize(WIDTH, HEIGHT);
-        fenetreOG.setFillWidth(true);
-        fenetreOG.setAlignment(Pos.CENTER);
-        fenetreOG.setSpacing(25);
-        fenetreOG.setStyle("-fx-background-color:#2A7FFF");
         
         paneMenu.getChildren().add(fenetreOG);
 
