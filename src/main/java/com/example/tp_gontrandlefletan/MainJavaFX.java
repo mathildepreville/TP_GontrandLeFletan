@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -56,7 +57,8 @@ public class MainJavaFX extends Application {
 
         // Escape ouvre le menu principal
         sceneJeu.setOnKeyPressed(e -> {
-            if (e.getCode().toString().equals("ESCAPE")) {
+            Input.setKeyPressed(e.getCode(),true);
+            if(e.getCode() == KeyCode.ESCAPE){
                 stage.setScene(sceneMenu);
             }
         });

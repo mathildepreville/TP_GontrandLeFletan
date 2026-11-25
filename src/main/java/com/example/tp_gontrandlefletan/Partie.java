@@ -18,12 +18,9 @@ public class Partie {
     Random rnd = new Random();
 
     Partie(){
-        gontrand = new Gontrand(new Point2D(0,0),new Point2D(100,100),new Point2D(100,100),new Point2D(64,64),new Image("gontrand.png"));
+        gontrand = new Gontrand(new Point2D(0,0),new Point2D(0,100),new Point2D(100,100),new Point2D(64,64),new Image("gontrand.png"));
         poissonEnnemis = new ArrayList<>();
         camera = new Camera();
-        camera.setPositionCamera(
-                new Point2D(300, 0)
-        );
     }
     public void update(double deltaTemps){
         // Met à jour les déplacements de Gontrand.

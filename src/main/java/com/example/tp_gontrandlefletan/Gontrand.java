@@ -26,6 +26,9 @@ public class Gontrand extends ObjetDuJeu{
 
     @Override
     public void update(double deltaTemps) {
+        System.out.println(
+                Input.isKeyPressed(KeyCode.RIGHT)
+        );
         // gérer les touches
         if(Input.isKeyPressed(KeyCode.RIGHT)){
             allerDroite();

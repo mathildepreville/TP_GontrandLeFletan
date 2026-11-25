@@ -22,7 +22,8 @@ public class Camera {
     }
 
     public void suivre(Gontrand gontrand ){
-        double nouvellePosition = gontrand.getCentre().getX()-MainJavaFX.WIDTH*0.2;
+        double nouvellePosition = gontrand.getPosition().getX()-MainJavaFX.WIDTH*0.2;
+        nouvellePosition = Math.max(0, nouvellePosition);
         if(nouvellePosition > positionCamera.getX()){
             positionCamera = new Point2D(nouvellePosition,0);
         }
