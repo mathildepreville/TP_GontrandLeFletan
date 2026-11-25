@@ -4,11 +4,19 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 public class EtoileDeMer extends Projectile{
 
 
-    public EtoileDeMer(Point2D velocite, Point2D position, Point2D acceleration, Point2D taille, Image image) {
-        super(velocite, position, acceleration, taille, image);
+    public EtoileDeMer(Point2D position) {
+        super(
+                new Point2D(800,0),//velocite
+                position,
+                Point2D.ZERO,//acceleration
+                new Point2D(36, 35),//taille en px
+                new Image(Objects.requireNonNull(EtoileDeMer.class.getResourceAsStream("etoile.png")))//recommender psar intelliji
+        );
 
     }
 
