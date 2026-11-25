@@ -15,7 +15,7 @@ public class EtoileDeMer extends Projectile{
                 position,
                 Point2D.ZERO,//acceleration
                 new Point2D(36, 35),//taille en px
-                new Image(Objects.requireNonNull(EtoileDeMer.class.getResourceAsStream("etoile.png")))//recommender psar intelliji
+                new Image("etoile.png")
         );
 
     }

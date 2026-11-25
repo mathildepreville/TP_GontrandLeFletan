@@ -11,6 +11,7 @@ public class Partie {
     private Camera camera;
     private Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonEnnemis;
+    private ArrayList<Projectile> projectiles;
 
     // Temps écoulé depuis l'apparition du dernier groupe d'ennemis.
     private double tempDepuisDernierGroupe = 0;
@@ -21,6 +22,7 @@ public class Partie {
         gontrand = new Gontrand(new Point2D(0,0),new Point2D(0,100),new Point2D(100,100),new Point2D(64,64),new Image("gontrand.png"));
         poissonEnnemis = new ArrayList<>();
         camera = new Camera();
+        projectiles = new ArrayList<>();
     }
     public void update(double deltaTemps){
         // Met à jour les déplacements de Gontrand.
@@ -78,6 +80,16 @@ public class Partie {
                     )
             );
         }
+    }
+
+    public void lancerProjectile() {
+
+        Point2D position = gontrand.getCentre()
+                .subtract(new Point2D(36 / 2.0, 35 / 2.0));
+
+        EtoileDeMer etoile = new EtoileDeMer(position);
+
+        projectiles.add(etoile);
     }
 
 }
