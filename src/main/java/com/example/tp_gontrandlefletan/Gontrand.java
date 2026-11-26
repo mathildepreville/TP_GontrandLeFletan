@@ -15,20 +15,11 @@ public class Gontrand extends ObjetDuJeu{
     }
 
     public void draw(GraphicsContext context, Camera camera) {
-        Point2D positionEcran = camera.coordoEcran(position);
-        context.drawImage(
-                image,
-                positionEcran.getX(),
-                positionEcran.getY()
-        );
-        //super.draw(context);
+        super.draw(context,camera);
     }
 
     @Override
     public void update(double deltaTemps) {
-//        System.out.println(
-//                Input.isKeyPressed(KeyCode.RIGHT)
-//        );
         // gérer les touches
         if(Input.isKeyPressed(KeyCode.RIGHT)){
             allerDroite();

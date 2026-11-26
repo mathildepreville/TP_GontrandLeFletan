@@ -20,8 +20,9 @@ public abstract class ObjetDuJeu {
         this.image = image;
     }
 
-    public void draw(GraphicsContext context){
-        context.drawImage(image,position.getX(),position.getY());
+    public void draw(GraphicsContext context,Camera camera){
+        var coordonEcran = camera.coordoEcran(position);
+        context.drawImage(image,coordonEcran.getX(),coordonEcran.getY());
 
     }
 

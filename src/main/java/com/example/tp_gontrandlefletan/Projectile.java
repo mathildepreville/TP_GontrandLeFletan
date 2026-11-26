@@ -12,8 +12,8 @@ public abstract class Projectile extends ObjetDuJeu{
     }
 
     @Override
-    public void draw(GraphicsContext context) {
-        super.draw(context);
+    public void draw(GraphicsContext context, Camera camera) {
+        super.draw(context, camera);
     }
 
     @Override

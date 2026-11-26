@@ -36,6 +36,7 @@ public class Partie {
         gontrand.update(deltaTemps);
         //faire le camera suivre gontrand
         camera.suivre(gontrand);
+        // Empêche gontrand de soritr de l'écran.
         if(gontrand.getGauche()<camera.getPositionCamera().getX()){
             gontrand.setPosition(new Point2D(camera.getPositionCamera().getX(),gontrand.getPosition().getY()));
         }
@@ -48,6 +49,7 @@ public class Partie {
         if(gontrand.getBas()>MainJavaFX.HEIGHT){
             gontrand.setPosition(new Point2D(gontrand.getPosition().getX(),MainJavaFX.HEIGHT-gontrand.getTaille().getY()));
         }
+
         // Fait apparaître un nouveau groupe toutes les 1.75 secondes.
         tempDepuisDernierGroupe += deltaTemps;
         if(tempDepuisDernierGroupe >= 1.75){
@@ -59,7 +61,7 @@ public class Partie {
             poisson.update(deltaTemps);
         }
 
-        //activation/désactivation mode debug_D
+        // Activation/désactivation mode debug_D
         boolean dMaintenant = Input.isKeyPressed(KeyCode.D);
 
         if(dMaintenant && !dAvant){
@@ -88,7 +90,7 @@ public class Partie {
         gontrand.draw(context,camera);
 
         for (PoissonEnnemi poisson : poissonEnnemis) {
-            poisson.draw(context);
+            poisson.draw(context, camera);
         }
 
         if(modeDebug){
@@ -97,13 +99,10 @@ public class Partie {
         }
 
         for (Projectile projectile : projectiles) {
-            projectile.draw(context);
+            projectile.draw(context, camera);
         }//dessiner les projectiles
     }
 
-    public Gontrand getGontrand(){
-        return gontrand;
-    }
 
     // Crée un groupe de 1 à 5 poissons ennemis.
     private void creerGroupEnnemi(){
@@ -118,7 +117,7 @@ public class Partie {
         String imageChoisi = choixImages[rnd.nextInt(choixImages.length)];//choisi un poisson au hasard
 
         // Position aléatoire à droite de l'écran.
-        double x = rnd.nextDouble(900, 1200);
+        double x = camera.getPositionCamera().getX()+MainJavaFX.WIDTH+rnd.nextDouble(900, 1200);
         // Hauteur aléatoire.
         double y = rnd.nextDouble(50, 450);
         int taille = rnd.nextInt(1,6);
