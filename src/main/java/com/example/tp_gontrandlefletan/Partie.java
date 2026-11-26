@@ -12,6 +12,7 @@ import java.util.Random;
 import static com.example.tp_gontrandlefletan.BoiteSardines.CHARGE;
 
 public class Partie {
+    private static final double LARGEUR_NIVEAU = MainJavaFX.WIDTH*8;
     private boolean modeDebug = false;
     private boolean dAvant = false;
     private Camera camera;
@@ -25,7 +26,7 @@ public class Partie {
     Random rnd = new Random();
 
     Partie(){
-        gontrand = new Gontrand(new Point2D(0,0),new Point2D(0,100),new Point2D(100,100),new Point2D(64,64),new Image("gontrand.png"));
+        gontrand = new Gontrand(new Point2D(0,0),new Point2D(0,100),new Point2D(100,100), new Point2D(120,90),new Image("gontrand.png"));
         poissonEnnemis = new ArrayList<>();
         camera = new Camera();
         projectiles = new ArrayList<>();
@@ -33,7 +34,20 @@ public class Partie {
     public void update(double deltaTemps){
         // Met à jour les déplacements de Gontrand.
         gontrand.update(deltaTemps);
+        //faire le camera suivre gontrand
         camera.suivre(gontrand);
+        if(gontrand.getGauche()<camera.getPositionCamera().getX()){
+            gontrand.setPosition(new Point2D(camera.getPositionCamera().getX(),gontrand.getPosition().getY()));
+        }
+        if(gontrand.getDroite()>LARGEUR_NIVEAU){
+            gontrand.setPosition(new Point2D(LARGEUR_NIVEAU-gontrand.getTaille().getX(),gontrand.getPosition().getY()));
+        }
+        if(gontrand.getHaut()<0){
+            gontrand.setPosition(new Point2D(gontrand.getPosition().getX(),0));
+        }
+        if(gontrand.getBas()>MainJavaFX.HEIGHT){
+            gontrand.setPosition(new Point2D(gontrand.getPosition().getX(),MainJavaFX.HEIGHT-gontrand.getTaille().getY()));
+        }
         // Fait apparaître un nouveau groupe toutes les 1.75 secondes.
         tempDepuisDernierGroupe += deltaTemps;
         if(tempDepuisDernierGroupe >= 1.75){
@@ -45,6 +59,7 @@ public class Partie {
             poisson.update(deltaTemps);
         }
 
+        //activation/désactivation mode debug_D
         boolean dMaintenant = Input.isKeyPressed(KeyCode.D);
 
         if(dMaintenant && !dAvant){

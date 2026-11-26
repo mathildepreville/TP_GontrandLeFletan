@@ -51,6 +51,10 @@ public abstract class ObjetDuJeu {
         return position;
     }
 
+    public Point2D getTaille() {
+        return taille;
+    }
+
     public void setPosition(Point2D position) {
         this.position = position;
     }
