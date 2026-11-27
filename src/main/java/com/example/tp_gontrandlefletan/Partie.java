@@ -200,13 +200,16 @@ public class Partie {
                 Point2D position = gontrand.getCentre()
                         .subtract(new Point2D(36 / 2.0, 35 / 2.0));
 
-                EtoileDeMer etoile = new EtoileDeMer(position);
+                EtoileDeMer etoile = new EtoileDeMer(position);//car je ne lai pas fait dans sa classe
 
                 projectiles.add(etoile);//creer une etoile
                 break;
 
             case HIPPOCAMPES:
                 // Créer les trois hippocampes
+                ArrayList<Hippocampe> trio = Hippocampe.creerTrio(gontrand.getCentre());
+
+                projectiles.addAll(trio);
                 break;
 
             case SARDINES:
