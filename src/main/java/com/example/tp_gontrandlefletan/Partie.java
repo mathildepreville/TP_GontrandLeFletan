@@ -5,8 +5,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static com.example.tp_gontrandlefletan.BoiteSardines.CHARGE;
@@ -106,6 +109,22 @@ public class Partie {
         if(modeDebug){
             context.setStroke(Color.YELLOW);
             context.strokeLine(MainJavaFX.WIDTH*0.2,0,MainJavaFX.WIDTH*0.2,MainJavaFX.HEIGHT);
+            context.setLineWidth(3);
+
+            List<ObjetDuJeu> tousLesObjets = new ArrayList<>();
+            tousLesObjets.add(gontrand);
+            tousLesObjets.addAll(poissonEnnemis);
+
+            for (ObjetDuJeu objet : tousLesObjets) {
+                var coordonEcran = camera.coordoEcran(objet.position);
+                Image img = objet.image;
+                context.strokeRect(
+                        coordonEcran.getX(),
+                        coordonEcran.getY(),
+                        img.getWidth(),
+                        img.getHeight()
+                );
+            }
         }
 
         for (Projectile projectile : projectiles) {
