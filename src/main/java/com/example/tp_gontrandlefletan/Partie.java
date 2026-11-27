@@ -214,6 +214,11 @@ public class Partie {
 
             case SARDINES:
                 // Créer une boîte de sardines
+                Point2D positionSardines = gontrand.getCentre()
+                        .subtract(new Point2D(35 / 2.0, 29 / 2.0));
+
+                BoiteSardines sardines = new BoiteSardines(positionSardines);
+                projectiles.add(sardines);
                 break;
         }
     }
