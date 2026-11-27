@@ -25,16 +25,25 @@ public class Baril extends ObjetDuJeu{
 
     @Override
     public void draw(GraphicsContext context, Camera camera) {
+
+        if (utilise) {
+            image = imageOuvert;
+        }//change limage lorsque le baril a ete utilise
+
         super.draw(context, camera);
     }
 
     @Override
     public void update(double deltaTemps) {
 
-        if (utilise) {
-            image = imageOuvert;
-        }//change limage lorsque le baril a ete utilise
+        tempsEcoule += deltaTemps;//additiopnne le temps ecoule
         super.update(deltaTemps);
+
+        double y = (MainJavaFX.HEIGHT - taille.getY()) / 2 * Math.sin(2 * Math.PI * tempsEcoule / PERIODE)
+                + (MainJavaFX.HEIGHT - taille.getY()) / 2;
+
+        position = new Point2D(position.getX(), y);
+        // Calcule la position verticale avec le sinus
     }
 
 
