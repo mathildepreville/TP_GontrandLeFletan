@@ -111,6 +111,9 @@ public class Partie {
             }
         }
         baril.update(deltaTemps);//met a jour les deplacements du baril
+        if (baril.getDroite() < camera.getPositionCamera().getX()) {
+            baril = null;
+        }//baril est nul sil depasse la cmaera
     }
 
     public void draw(GraphicsContext context){
