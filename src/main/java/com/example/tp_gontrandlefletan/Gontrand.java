@@ -9,6 +9,7 @@ public class Gontrand extends ObjetDuJeu{
 
     private static final double VITESSE_MAX = 300;
     private static final double ACCELERATION_MAX = 1000;
+    private TypeProjectile typeProjectile = TypeProjectile.ETOILE;//commence a lancer des etoiles
 
     public Gontrand(Point2D velocite, Point2D position, Point2D acceleration, Point2D taille, Image image) {
         super(velocite, position, acceleration, taille, image);
