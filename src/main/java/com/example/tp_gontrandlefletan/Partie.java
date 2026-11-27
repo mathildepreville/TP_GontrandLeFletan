@@ -5,8 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +85,8 @@ public class Partie {
                     gontrand.getHaut()<poisson.getBas()&&
                     gontrand.getBas()>poisson.getHaut();
             if(collision){
-                System.out.println("ouch!");
+                gontrand.perdreVie();
+                System.out.println(gontrand.getVies());
             }
         }
         //clear poisson ennemi une fois côté droite de l'image touche le côté gauche de la caméra
@@ -116,6 +115,12 @@ public class Partie {
 
     public void draw(GraphicsContext context){
         drawDebug(context);
+        double laergeurVie = 150 * gontrand.getVies()/4;
+        context.setFill(Color.WHITE);
+        context.fillRect(20,20,laergeurVie,20);
+        context.setStroke(Color.WHITE);
+        context.strokeRect(20,20,150,20);
+
         gontrand.draw(context,camera);
 
         for (PoissonEnnemi poisson : poissonEnnemis) {
@@ -166,8 +171,6 @@ public class Partie {
                 "poisson5.png"
         };
 
-        String imageChoisi = choixImages[rnd.nextInt(choixImages.length)];//choisi un poisson au hasard
-
         // Position aléatoire à droite de l'écran.
         double x = camera.getPositionCamera().getX()+MainJavaFX.WIDTH+rnd.nextDouble(100,300);
         double y = rnd.nextDouble(MainJavaFX.HEIGHT*0.2, MainJavaFX.HEIGHT*0.8);
@@ -186,10 +189,10 @@ public class Partie {
             poissonEnnemis.add(
                     new PoissonEnnemi(
                             new Point2D(vitesseX, vitesseY),
-                            new Point2D(x+i*200, y+i),
+                            new Point2D(x+i*200, y+i*100),
                             new Point2D(0, 0),
                             new Point2D(largeur, hauteur),
-                            new Image(imageChoisi)
+                            new Image(choixImages[rnd.nextInt(choixImages.length)])
                     )
             );
         }

@@ -7,15 +7,21 @@ import javafx.scene.input.KeyCode;
 
 public class Gontrand extends ObjetDuJeu{
 
+    private boolean invincible = false;
+    private double tempsInvincible;
+    private int vies;
     private static final double VITESSE_MAX = 300;
     private static final double ACCELERATION_MAX = 1000;
 
     public Gontrand(Point2D velocite, Point2D position, Point2D acceleration, Point2D taille, Image image) {
         super(velocite, position, acceleration, taille, image);
+        vies = 4;
     }
 
     public void draw(GraphicsContext context, Camera camera) {
-        super.draw(context,camera);
+        if(!invincible|| estVisible()) {
+            super.draw(context, camera);
+        }
     }
 
     @Override
@@ -51,6 +57,21 @@ public class Gontrand extends ObjetDuJeu{
             );
         }
 
+        if(invincible){
+            tempsInvincible -= deltaTemps;
+            if(tempsInvincible <= 0){
+                invincible = false;
+                tempsInvincible = 0;
+            }
+        }
+
+    }
+
+    public boolean estVisible(){
+        if(!invincible){
+            return true;
+        }
+         return ((int)(tempsInvincible*4))%2 == 0;
     }
 
     public void allerGauche(){
@@ -86,5 +107,20 @@ public class Gontrand extends ObjetDuJeu{
             return;
         }
         acceleration = new Point2D(acceleration.getX(), -velocite.getY()*5);
+    }
+
+    public void perdreVie(){
+        if(invincible){
+            return;
+        }
+        if(vies>0){
+            vies--;
+        }
+        invincible = true;
+        tempsInvincible = 2;
+    }
+
+    public int getVies() {
+        return vies;
     }
 }
