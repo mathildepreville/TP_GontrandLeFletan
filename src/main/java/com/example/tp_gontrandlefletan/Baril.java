@@ -26,10 +26,6 @@ public class Baril extends ObjetDuJeu{
     @Override
     public void draw(GraphicsContext context, Camera camera) {
 
-        if (utilise) {
-            image = imageOuvert;
-        }//change limage lorsque le baril a ete utilise
-
         super.draw(context, camera);
     }
 
@@ -48,7 +44,8 @@ public class Baril extends ObjetDuJeu{
 
     public void utiliser() {
         utilise = true;
-    }//change letat du baril
+        image = imageOuvert;
+    }//change letat et limage du baril
 
     public boolean estUtilise() {
         return utilise;
