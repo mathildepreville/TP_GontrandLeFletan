@@ -40,7 +40,7 @@ public class Partie {
         camera = new Camera();
         projectiles = new ArrayList<>();
 
-        double x = LARGEUR_NIVEAU * (0.15 + rnd.nextDouble() * 0.30);
+        double x = LARGEUR_NIVEAU * (0.2 + rnd.nextDouble() * 0.6);//pos entre 1/5 et 4/5 au hasard
         double y = (MainJavaFX.HEIGHT - 83) / 2;
 
         baril = new Baril(new Point2D(x, y));
@@ -110,6 +110,7 @@ public class Partie {
                 projectile.update(deltaTemps);//update le reste des projectils en appelant leur methode update respective
             }
         }
+        baril.update(deltaTemps);//met a jour les deplacements du baril
     }
 
     public void draw(GraphicsContext context){
@@ -123,6 +124,8 @@ public class Partie {
         for (Projectile projectile : projectiles) {
             projectile.draw(context, camera);
         }//dessiner les projectiles
+
+        baril.draw(context, camera);//dessiner un baril
     }
 
     public void drawDebug(GraphicsContext context){
