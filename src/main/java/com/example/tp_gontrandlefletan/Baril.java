@@ -30,6 +30,10 @@ public class Baril extends ObjetDuJeu{
 
     @Override
     public void update(double deltaTemps) {
+
+        if (utilise) {
+            image = imageOuvert;
+        }//change limage lorsque le baril a ete utilise
         super.update(deltaTemps);
     }
 
