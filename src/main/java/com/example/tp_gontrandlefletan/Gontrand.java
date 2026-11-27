@@ -13,9 +13,13 @@ public class Gontrand extends ObjetDuJeu{
     private static final double VITESSE_MAX = 300;
     private static final double ACCELERATION_MAX = 1000;
 
+    private Image imageOutch;
+    private Image imageNormale;
     public Gontrand(Point2D velocite, Point2D position, Point2D acceleration, Point2D taille, Image image) {
         super(velocite, position, acceleration, taille, image);
         vies = 4;
+        imageNormale = new Image("gontrand.png");
+        imageOutch = new Image("gontrand-outch.png");
     }
 
     public void draw(GraphicsContext context, Camera camera) {
@@ -60,6 +64,7 @@ public class Gontrand extends ObjetDuJeu{
         if(invincible){
             tempsInvincible -= deltaTemps;
             if(tempsInvincible <= 0){
+                image = imageNormale;
                 invincible = false;
                 tempsInvincible = 0;
             }
@@ -118,6 +123,8 @@ public class Gontrand extends ObjetDuJeu{
         }
         invincible = true;
         tempsInvincible = 2;
+
+        image = imageOutch;
     }
 
     public int getVies() {
