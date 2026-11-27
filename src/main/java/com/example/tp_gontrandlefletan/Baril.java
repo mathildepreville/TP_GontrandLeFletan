@@ -46,5 +46,14 @@ public class Baril extends ObjetDuJeu{
         // Calcule la position verticale avec le sinus
     }
 
+    public void utiliser() {
+        utilise = true;
+    }//change letat du baril
 
+    public boolean estUtilise() {
+        return utilise;
+    }//permet de verifier si le baril a ete utiliser
 }
+
+
+
