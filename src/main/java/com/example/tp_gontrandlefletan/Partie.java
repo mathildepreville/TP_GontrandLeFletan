@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.Random;
 import static com.example.tp_gontrandlefletan.BoiteSardines.CHARGE;
 
 public class Partie {
+    private boolean pause = false;
+    private boolean pAvant = false;
     private static final double LARGEUR_NIVEAU = MainJavaFX.WIDTH*8;
     private boolean modeDebug = false;
     private boolean dAvant = false;
@@ -53,68 +56,104 @@ public class Partie {
 
         dAvant = dMaintenant;
 
-        // Met à jour les déplacements de Gontrand.
-        gontrand.update(deltaTemps);
-        //faire le camera suivre gontrand
-        camera.suivre(gontrand);
-        // Empêche gontrand de soritr de l'écran.
-        if(gontrand.getGauche()<camera.getPositionCamera().getX()){
-            gontrand.setPosition(new Point2D(camera.getPositionCamera().getX(),gontrand.getPosition().getY()));
-        }
-        if(gontrand.getDroite()>LARGEUR_NIVEAU){
-            gontrand.setPosition(new Point2D(LARGEUR_NIVEAU-gontrand.getTaille().getX(),gontrand.getPosition().getY()));
-        }
-        if(gontrand.getHaut()<0){
-            gontrand.setPosition(new Point2D(gontrand.getPosition().getX(),0));
-        }
-        if(gontrand.getBas()>MainJavaFX.HEIGHT){
-            gontrand.setPosition(new Point2D(gontrand.getPosition().getX(),MainJavaFX.HEIGHT-gontrand.getTaille().getY()));
-        }
+        // Activation/désactivation mode Pause
+        boolean pMaintenant = Input.isKeyPressed(KeyCode.SPACE);
 
-        // Fait apparaître un nouveau groupe toutes les 1.75 secondes.
-        tempDepuisDernierGroupe += deltaTemps;
-        if(tempDepuisDernierGroupe >= 1.75){
-            creerGroupEnnemi();
-            tempDepuisDernierGroupe = 0;
+        if(pMaintenant && !pAvant){
+            pause = !pause;
         }
+        pAvant = pMaintenant;
 
-        for (PoissonEnnemi poisson : poissonEnnemis) {
-            poisson.update(deltaTemps);
-            boolean collision = gontrand.getDroite()>poisson.getGauche()&&
-                    gontrand.getGauche()<poisson.getDroite()&&
-                    gontrand.getHaut()<poisson.getBas()&&
-                    gontrand.getBas()>poisson.getHaut();
-            if(collision){
-                gontrand.perdreVie();
-                System.out.println(gontrand.getVies());
+
+        if(!pause){
+            // Met à jour les déplacements de Gontrand.
+            gontrand.update(deltaTemps);
+            //faire le camera suivre gontrand
+            camera.suivre(gontrand);
+            // Empêche gontrand de soritr de l'écran.
+            if(gontrand.getGauche()<camera.getPositionCamera().getX()){
+                gontrand.setPosition(new Point2D(camera.getPositionCamera().getX(),gontrand.getPosition().getY()));
             }
-        }
-        //clear poisson ennemi une fois côté droite de l'image touche le côté gauche de la caméra
-
-        poissonEnnemis.removeIf(poisson ->
-                poisson.getDroite()<camera.getPositionCamera().getX());
-
-
-        for (Projectile projectile : projectiles) {
-
-            if (projectile instanceof BoiteSardines sardine) {
-
-                Point2D champ = champElectrique(poissonEnnemis, sardine.getCentre());
-                //update les boitesSardines en fonction des poissonEnnemis et du centre de la boite
-
-                sardine.update(deltaTemps, champ, MainJavaFX.HEIGHT);
-
-            } else {
-
-                projectile.update(deltaTemps);//update le reste des projectils en appelant leur methode update respective
+            if(gontrand.getDroite()>LARGEUR_NIVEAU){
+                gontrand.setPosition(new Point2D(LARGEUR_NIVEAU-gontrand.getTaille().getX(),gontrand.getPosition().getY()));
             }
+            if(gontrand.getHaut()<0){
+                gontrand.setPosition(new Point2D(gontrand.getPosition().getX(),0));
+            }
+            if(gontrand.getBas()>MainJavaFX.HEIGHT){
+                gontrand.setPosition(new Point2D(gontrand.getPosition().getX(),MainJavaFX.HEIGHT-gontrand.getTaille().getY()));
+            }
+
+            // Fait apparaître un nouveau groupe toutes les 1.75 secondes.
+            tempDepuisDernierGroupe += deltaTemps;
+            if(tempDepuisDernierGroupe >= 1.75){
+                creerGroupEnnemi();
+                tempDepuisDernierGroupe = 0;
+            }
+
+            for (PoissonEnnemi poisson : poissonEnnemis) {
+                poisson.update(deltaTemps);
+                boolean collision = gontrand.getDroite()>poisson.getGauche()&&
+                        gontrand.getGauche()<poisson.getDroite()&&
+                        gontrand.getHaut()<poisson.getBas()&&
+                        gontrand.getBas()>poisson.getHaut();
+                if(collision){
+                    gontrand.perdreVie();
+                    System.out.println(gontrand.getVies());
+                }
+            }
+            //clear poisson ennemi une fois côté droite de l'image touche le côté gauche de la caméra
+
+            poissonEnnemis.removeIf(poisson ->
+                    poisson.getDroite()<camera.getPositionCamera().getX());
+
+
+            for (Projectile projectile : projectiles) {
+
+                if (projectile instanceof BoiteSardines sardine) {
+
+                    Point2D champ = champElectrique(poissonEnnemis, sardine.getCentre());
+                    //update les boitesSardines en fonction des poissonEnnemis et du centre de la boite
+
+                    sardine.update(deltaTemps, champ, MainJavaFX.HEIGHT);
+
+                } else {
+
+                    projectile.update(deltaTemps);//update le reste des projectils en appelant leur methode update respective
+                }
+            }
+            baril.update(deltaTemps);//met a jour les deplacements du baril
+
         }
-        baril.update(deltaTemps);//met a jour les deplacements du baril
 
     }
 
     public void draw(GraphicsContext context){
+        if(pause){
+            context.setFill(
+                    Color.rgb(0,0,0,0.4)
+            );
+
+            context.fillRect(
+                    0,
+                    0,
+                    MainJavaFX.WIDTH,
+                    MainJavaFX.HEIGHT
+            );
+
+            context.setFill(Color.WHITE);
+
+            context.setFont(Font.font(35));
+
+            context.fillText(
+                    "PAUSE",
+                    MainJavaFX.WIDTH / 2.0 - 60,
+                    MainJavaFX.HEIGHT / 2.0
+            );
+        }
+
         drawDebug(context);
+
         double laergeurVie = 150 * gontrand.getVies()/4;
         context.setFill(Color.WHITE);
         context.fillRect(20,20,laergeurVie,20);
