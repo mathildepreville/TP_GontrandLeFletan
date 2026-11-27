@@ -23,6 +23,7 @@ public class Partie {
     private ArrayList<PoissonEnnemi> poissonEnnemis;
     private ArrayList<Projectile> projectiles;
     private TypeProjectile typeProjectile = TypeProjectile.ETOILE;//commence a lancer des etoiles
+    private Baril baril;
 
     // Temps écoulé depuis l'apparition du dernier groupe d'ennemis.
     private double tempDepuisDernierGroupe = 0;
@@ -38,6 +39,11 @@ public class Partie {
         poissonEnnemis = new ArrayList<>();
         camera = new Camera();
         projectiles = new ArrayList<>();
+
+        double x = LARGEUR_NIVEAU * (0.15 + rnd.nextDouble() * 0.30);
+        double y = (MainJavaFX.HEIGHT - 83) / 2;
+
+        baril = new Baril(new Point2D(x, y));
     }
     public void update(double deltaTemps){
         // Activation/désactivation mode debug_D
