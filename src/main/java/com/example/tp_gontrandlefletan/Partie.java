@@ -185,17 +185,15 @@ public class Partie {
 
     public void lancerProjectile() {
 
-        Point2D position = gontrand.getCentre()
-                .subtract(new Point2D(36 / 2.0, 35 / 2.0));
-
-        EtoileDeMer etoile = new EtoileDeMer(position);
-
-        projectiles.add(etoile);
-
         switch (typeProjectile) {
 
             case ETOILE:
-                // Créer une étoile de mer
+                Point2D position = gontrand.getCentre()
+                        .subtract(new Point2D(36 / 2.0, 35 / 2.0));
+
+                EtoileDeMer etoile = new EtoileDeMer(position);
+
+                projectiles.add(etoile);//creer une etoile
                 break;
 
             case HIPPOCAMPES:
