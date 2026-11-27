@@ -22,6 +22,7 @@ public class Partie {
     private Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonEnnemis;
     private ArrayList<Projectile> projectiles;
+    private TypeProjectile typeProjectile = TypeProjectile.ETOILE;//commence a lancer des etoiles
 
     // Temps écoulé depuis l'apparition du dernier groupe d'ennemis.
     private double tempDepuisDernierGroupe = 0;
@@ -190,6 +191,21 @@ public class Partie {
         EtoileDeMer etoile = new EtoileDeMer(position);
 
         projectiles.add(etoile);
+
+        switch (typeProjectile) {
+
+            case ETOILE:
+                // Créer une étoile de mer
+                break;
+
+            case HIPPOCAMPES:
+                // Créer les trois hippocampes
+                break;
+
+            case SARDINES:
+                // Créer une boîte de sardines
+                break;
+        }
     }
 
     public Point2D champElectrique(ArrayList<PoissonEnnemi> poissons, Point2D position) {
