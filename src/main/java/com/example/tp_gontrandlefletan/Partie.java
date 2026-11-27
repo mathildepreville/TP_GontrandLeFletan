@@ -128,7 +128,9 @@ public class Partie {
             projectile.draw(context, camera);
         }//dessiner les projectiles
 
-        baril.draw(context, camera);//dessiner un baril
+        if (baril != null) {
+            baril.draw(context, camera);//dessiner un baril
+        }
     }
 
     public void drawDebug(GraphicsContext context){
