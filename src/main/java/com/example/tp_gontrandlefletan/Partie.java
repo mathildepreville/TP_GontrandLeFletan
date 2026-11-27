@@ -39,6 +39,15 @@ public class Partie {
         projectiles = new ArrayList<>();
     }
     public void update(double deltaTemps){
+        // Activation/désactivation mode debug_D
+        boolean dMaintenant = Input.isKeyPressed(KeyCode.D);
+
+        if(dMaintenant && !dAvant){
+            modeDebug = !modeDebug;
+        }
+
+        dAvant = dMaintenant;
+
         // Met à jour les déplacements de Gontrand.
         gontrand.update(deltaTemps);
         //faire le camera suivre gontrand
@@ -66,22 +75,19 @@ public class Partie {
 
         for (PoissonEnnemi poisson : poissonEnnemis) {
             poisson.update(deltaTemps);
+            boolean collision = gontrand.getDroite()>poisson.getGauche()&&
+                    gontrand.getGauche()<poisson.getDroite()&&
+                    gontrand.getHaut()<poisson.getBas()&&
+                    gontrand.getBas()>poisson.getHaut();
+            if(collision){
+                System.out.println("ouch!");
+            }
         }
         //clear poisson ennemi une fois côté droite de l'image touche le côté gauche de la caméra
 
         poissonEnnemis.removeIf(poisson ->
                 poisson.getDroite()<camera.getPositionCamera().getX());
 
-
-
-        // Activation/désactivation mode debug_D
-        boolean dMaintenant = Input.isKeyPressed(KeyCode.D);
-
-        if(dMaintenant && !dAvant){
-            modeDebug = !modeDebug;
-        }
-
-        dAvant = dMaintenant;
 
         for (Projectile projectile : projectiles) {
 
@@ -100,12 +106,19 @@ public class Partie {
     }
 
     public void draw(GraphicsContext context){
+        drawDebug(context);
         gontrand.draw(context,camera);
 
         for (PoissonEnnemi poisson : poissonEnnemis) {
             poisson.draw(context, camera);
         }
 
+        for (Projectile projectile : projectiles) {
+            projectile.draw(context, camera);
+        }//dessiner les projectiles
+    }
+
+    public void drawDebug(GraphicsContext context){
         if(modeDebug){
             context.setStroke(Color.YELLOW);
             context.strokeLine(MainJavaFX.WIDTH*0.2,0,MainJavaFX.WIDTH*0.2,MainJavaFX.HEIGHT);
@@ -127,9 +140,6 @@ public class Partie {
             }
         }
 
-        for (Projectile projectile : projectiles) {
-            projectile.draw(context, camera);
-        }//dessiner les projectiles
     }
 
 
