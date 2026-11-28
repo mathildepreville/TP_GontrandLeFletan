@@ -53,17 +53,12 @@ public class Baril extends ObjetDuJeu{
 
     public boolean toucherGontrand(Gontrand gontrand) {
 
-        if (utilise) {
-            return false;
-        }
-
-        if (gontrand.collisionneAvec(this)) {
-            utilise = true;
-            image = imageOuvert;
+        if (!estUtilise() && gontrand.collisionneAvec(this)) {//si na pas ete utiliser et que gontrand en collision avec this (baril)
+            utiliser();//change letat et limage
             return true;
         }
 
-        return false;
+        return false;//sinon, toucherGontrand est false
     }
 }
 

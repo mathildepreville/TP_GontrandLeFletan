@@ -142,6 +142,9 @@ public class Partie {
                 if (droiteBarilEcran < 0) {
                     baril = null;
                 }
+                if (baril.toucherGontrand(gontrand)) {
+                    changerTypeProjectile();//change de projectile lorsque collision avec Gontrand
+                }
             }
 
         }
@@ -297,6 +300,24 @@ public class Partie {
 
                 BoiteSardines sardines = new BoiteSardines(positionSardines);
                 projectiles.add(sardines);
+                break;
+        }
+    }
+
+    private void changerTypeProjectile() {
+
+        switch (typeProjectile) {
+
+            case ETOILE:
+                typeProjectile = TypeProjectile.HIPPOCAMPES;
+                break;
+
+            case HIPPOCAMPES:
+                typeProjectile = TypeProjectile.SARDINES;
+                break;
+
+            case SARDINES:
+                typeProjectile = TypeProjectile.ETOILE;
                 break;
         }
     }
