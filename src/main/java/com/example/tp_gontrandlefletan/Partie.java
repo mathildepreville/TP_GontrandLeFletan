@@ -26,7 +26,7 @@ public class Partie {
     private Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonEnnemis;
     private ArrayList<Projectile> projectiles;
-    private TypeProjectile typeProjectile = TypeProjectile.ETOILE;//commence a lancer des etoiles
+    private TypeProjectile typeProjectile = TypeProjectile.SARDINES;//commence a lancer des etoiles
     private Baril baril;
 
     // Temps écoulé depuis l'apparition du dernier groupe d'ennemis.
@@ -135,15 +135,18 @@ public class Partie {
             if (baril != null) {
                 baril.update(deltaTemps);
 
+                // Vérifier si Gontrand touche le baril
+                if (baril.toucherGontrand(gontrand)) {
+                    changerTypeProjectile();
+                }
+
+                // Vérifier si le baril est sorti de l'écran
                 double droiteBarilEcran = camera.coordoEcran(
                         new Point2D(baril.getDroite(), baril.getPosition().getY())
                 ).getX();
 
                 if (droiteBarilEcran < 0) {
                     baril = null;
-                }
-                if (baril.toucherGontrand(gontrand)) {
-                    changerTypeProjectile();//change de projectile lorsque collision avec Gontrand
                 }
             }
 
@@ -179,6 +182,10 @@ public class Partie {
 
         for (Projectile projectile : projectiles) {
             projectile.draw(context, camera);
+            if (projectile instanceof BoiteSardines) {
+                System.out.println("Position écran : " +
+                        camera.coordoEcran(projectile.getPosition()));
+            }
         }//dessiner les projectiles
 
         if (baril != null) {
@@ -274,6 +281,7 @@ public class Partie {
     }
 
     public void lancerProjectile() {
+        System.out.println("Projectile actuel : " + typeProjectile);
 
         switch (typeProjectile) {
 
@@ -325,17 +333,22 @@ public class Partie {
     public Point2D champElectrique(ArrayList<PoissonEnnemi> poissons, Point2D position) {
         Point2D champTotal = Point2D.ZERO;//commencer avec un champ nul
 
-        double k = 8.99e9;
+        double k = 9e9;
+        double chargePoisson = -900;
 
         for (PoissonEnnemi poisson : poissons) {
 
             Point2D direction = position.subtract(poisson.getCentre());
 
-            double distance = Math.max(1, direction.magnitude());
+            double distance = Math.max(1, direction.magnitude()); //calculer la distance entre le centre du poisson et la boîte de sardines(jamais sous 1)
+            //direction.magnitude() Calcule la longueur du vecteur direction
+            double module = k * Math.abs(chargePoisson) / (distance * distance);// Ei= (k|qi|)/r^2
 
-            double module = k * CHARGE / (distance * distance);
+            Point2D directionUnitaire = direction.normalize();
+            Point2D champ = directionUnitaire.multiply(module);
 
-            Point2D champ = direction.normalize().multiply(-module);
+            // Le champ est inversé parce que le poisson est négatif.
+            champ = champ.multiply(-1);
 
             champTotal = champTotal.add(champ);
         }

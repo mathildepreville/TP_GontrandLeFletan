@@ -22,24 +22,32 @@ public class BoiteSardines extends Projectile{
 
     public void update(double deltaTemps, Point2D champ, double hauteurJeu) {
 
-        // Calcul de l'accélération électrique
-        acceleration = champ.multiply(CHARGE);
+        // Calculer la force électrique.
+        Point2D forceElectrique = champ.multiply(CHARGE);
 
-        // Mise à jour de la vitesse et de la position
-        super.update(deltaTemps);
+        //Calculer l'accélération (masse = 1).
+        acceleration = forceElectrique;
 
-        // Limiter la vitesse à 400 px/s
+        //Mettre à jour la vélocité.
+        velocite = velocite.add(acceleration.multiply(deltaTemps));
+
+        //Limiter la vélocité à 400 px/s.
         if (velocite.magnitude() > VITESSE_MAX) {
             velocite = velocite.normalize().multiply(VITESSE_MAX);
         }
 
-        // Rebond sur le haut de l'écran
+        //Mettre à jour la position.
+        position = position.add(velocite.multiply(deltaTemps));
+
+        //Rebondir sur le haut de l'écran.
         if (position.getY() <= 0 && velocite.getY() < 0) {
+
             velocite = new Point2D(velocite.getX(), -velocite.getY());
+
             position = new Point2D(position.getX(), 0);
         }
 
-        // Rebond sur le bas de l'écran
+        // Rebondir sur le bas de l'écran.
         if (position.getY() + taille.getY() >= hauteurJeu
                 && velocite.getY() > 0) {
 
