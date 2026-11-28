@@ -14,7 +14,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -56,13 +55,12 @@ public class MainJavaFX extends Application {
             public void handle(long temps) {
                 double deltaTemps = (temps - dernierTemps) * 1e-9;
                 partie.update(deltaTemps);
-                context.setFill(Color.web("#2A7FFF"));
+                context.setFill(partie.getCouleurFond());
                 context.fillRect(0, 0, WIDTH, HEIGHT);
                 if(partie.isRetourAccueil()){
                     stage.setScene(sceneMenu);
                     partie.resetFinDePartie();
                 }
-                System.out.println(partie.isRetourAccueil());
                 partie.draw(context);
                 dernierTemps = temps;
             }
@@ -175,12 +173,7 @@ public class MainJavaFX extends Application {
         var btnRetour = new Button("Retour");
 
         btnRetour.setOnAction(e -> {
-            System.out.println("RETOUR CLICK");
-
-            System.out.println(sceneMenu);
             stage.setScene(sceneMenu);
-
-            System.out.println(stage.getScene());
         });
 
         //Organisation des élémentas

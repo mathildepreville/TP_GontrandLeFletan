@@ -15,6 +15,7 @@ import static com.example.tp_gontrandlefletan.BoiteSardines.CHARGE;
 
 public class Partie {
 
+    private Color couleurFond;
     private boolean retourAccueil = false;
     private boolean finDePartie = false;
     private double tempsFinDePartie = 3;
@@ -38,6 +39,8 @@ public class Partie {
     Random rnd = new Random();
 
     Partie(){
+        genererCouleurFond();
+
         gontrand = new Gontrand(new Point2D(0,0), //vitesse
                 new Point2D(0,100), //position
                 new Point2D(100,100), // accélération
@@ -52,6 +55,16 @@ public class Partie {
 
         baril = new Baril(new Point2D(x, y));
     }
+
+    public Color getCouleurFond() {
+        return couleurFond;
+    }
+
+    public void genererCouleurFond(){
+        double hue = rnd.nextDouble(190,271);
+        couleurFond = Color.hsb(hue, 0.84,1.0);
+    }
+
     public void update(double deltaTemps){
         // Activation/désactivation mode debug_D
         boolean dMaintenant = Input.isKeyPressed(KeyCode.D);
@@ -113,11 +126,7 @@ public class Partie {
 
             for (PoissonEnnemi poisson : poissonEnnemis) {
                 poisson.update(deltaTemps);
-                boolean collision = gontrand.getDroite()>poisson.getGauche()&&
-                        gontrand.getGauche()<poisson.getDroite()&&
-                        gontrand.getHaut()<poisson.getBas()&&
-                        gontrand.getBas()>poisson.getHaut();
-                if(collision){
+                if(gontrand.collisionneAvec(poisson)){
                     gontrand.perdreVie();
                     if(gontrand.getVies() <= 0){
                         finDePartie = true;
@@ -127,10 +136,7 @@ public class Partie {
 
             //clear poisson ennemi une fois collision
 
-            poissonEnnemis.removeIf(poisson-> gontrand.getDroite()>poisson.getGauche()&&
-                    gontrand.getGauche()<poisson.getDroite()&&
-                    gontrand.getHaut()<poisson.getBas()&&
-                    gontrand.getBas()>poisson.getHaut());
+            poissonEnnemis.removeIf(poisson-> gontrand.collisionneAvec(poisson));
 
 
             for (Projectile projectile : projectiles) {
@@ -233,6 +239,7 @@ public class Partie {
     }
 
     public void prochainNiveau(){
+        genererCouleurFond();
         numeroNiveau++;
         poissonEnnemis.clear();
         gontrand.setPosition(new Point2D(0,100));
