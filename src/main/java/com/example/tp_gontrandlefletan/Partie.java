@@ -128,7 +128,18 @@ public class Partie {
                     projectile.update(deltaTemps);//update le reste des projectils en appelant leur methode update respective
                 }
             }
-            baril.update(deltaTemps);//met a jour les deplacements du baril
+            //met a jour les deplacements du baril en sassurant quil disparait lorsque la camerta le depasse
+            if (baril != null) {
+                baril.update(deltaTemps);
+
+                double droiteBarilEcran = camera.coordoEcran(
+                        new Point2D(baril.getDroite(), baril.getPosition().getY())
+                ).getX();
+
+                if (droiteBarilEcran < 0) {
+                    baril = null;
+                }
+            }
 
         }
 
