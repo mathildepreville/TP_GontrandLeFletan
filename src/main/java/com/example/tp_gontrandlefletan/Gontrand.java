@@ -147,5 +147,7 @@ public class Gontrand extends ObjetDuJeu{
         return vies;
     }
 
-
+    public void setVies(int vies) {
+        this.vies = vies;
+    }
 }

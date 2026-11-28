@@ -15,6 +15,9 @@ import static com.example.tp_gontrandlefletan.BoiteSardines.CHARGE;
 
 public class Partie {
 
+    private boolean retourAccueil = false;
+    private boolean finDePartie = false;
+    private double tempsFinDePartie = 3;
     private int numeroNiveau = 1;
     private double tempsAffichageNiveau = 4;
     private boolean pause = false;
@@ -67,6 +70,16 @@ public class Partie {
         }
         pAvant = pMaintenant;
 
+        if(finDePartie){
+            tempsFinDePartie -= deltaTemps;
+
+            if(tempsFinDePartie <= 0){
+                retourAccueil = true;
+            }
+
+            return;
+        }
+
 
         if(!pause){
             if(tempsAffichageNiveau > 0){
@@ -106,6 +119,9 @@ public class Partie {
                         gontrand.getBas()>poisson.getHaut();
                 if(collision){
                     gontrand.perdreVie();
+                    if(gontrand.getVies() <= 0){
+                        finDePartie = true;
+                    }
                 }
             }
 
@@ -144,6 +160,10 @@ public class Partie {
                 }
             }
 
+            if(gontrand.getDroite()>=LARGEUR_NIVEAU){
+                prochainNiveau();
+            }
+
         }
 
     }
@@ -155,7 +175,7 @@ public class Partie {
 
             context.setFont(Font.font(80));
 
-            context.fillText("NIVEAU"+ numeroNiveau,
+            context.fillText("NIVEAU "+ numeroNiveau,
                     MainJavaFX.WIDTH/2-150,
                     MainJavaFX.HEIGHT/2);
         }
@@ -204,6 +224,26 @@ public class Partie {
                     MainJavaFX.HEIGHT / 2.0
             );
         }
+
+        if (finDePartie) {
+            context.setFill(Color.DARKRED);
+            context.fillText("FIN DE PARTIE", MainJavaFX.WIDTH/2-250,MainJavaFX.HEIGHT/2);
+
+        }
+    }
+
+    public void prochainNiveau(){
+        numeroNiveau++;
+        poissonEnnemis.clear();
+        gontrand.setPosition(new Point2D(0,100));
+        gontrand.setVies(4);
+        camera.setPositionCamera(new Point2D(0,0));
+        tempsAffichageNiveau = 4;
+
+    }
+
+    public boolean isRetourAccueil(){
+        return retourAccueil;
     }
 
     public void drawDebug(GraphicsContext context){

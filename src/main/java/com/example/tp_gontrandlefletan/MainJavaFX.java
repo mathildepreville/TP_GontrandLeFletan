@@ -58,6 +58,9 @@ public class MainJavaFX extends Application {
                 partie.update(deltaTemps);
                 context.setFill(Color.web("#2A7FFF"));
                 context.fillRect(0, 0, WIDTH, HEIGHT);
+                if(partie.isRetourAccueil()){
+                    stage.setScene(sceneMenu);
+                }
                 partie.draw(context);
                 dernierTemps = temps;
             }
