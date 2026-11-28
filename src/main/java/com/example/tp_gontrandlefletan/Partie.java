@@ -15,6 +15,10 @@ import static com.example.tp_gontrandlefletan.BoiteSardines.CHARGE;
 
 public class Partie {
 
+    private Color couleurFond;
+    private boolean retourAccueil = false;
+    private boolean finDePartie = false;
+    private double tempsFinDePartie = 3;
     private int numeroNiveau = 1;
     private double tempsAffichageNiveau = 4;
     private boolean pause = false;
@@ -35,6 +39,8 @@ public class Partie {
     Random rnd = new Random();
 
     Partie(){
+        genererCouleurFond();
+
         gontrand = new Gontrand(new Point2D(0,0), //vitesse
                 new Point2D(0,100), //position
                 new Point2D(100,100), // accélération
@@ -49,6 +55,16 @@ public class Partie {
 
         baril = new Baril(new Point2D(x, y));
     }
+
+    public Color getCouleurFond() {
+        return couleurFond;
+    }
+
+    public void genererCouleurFond(){
+        double hue = rnd.nextDouble(190,271);
+        couleurFond = Color.hsb(hue, 0.84,1.0);
+    }
+
     public void update(double deltaTemps){
         // Activation/désactivation mode debug_D
         boolean dMaintenant = Input.isKeyPressed(KeyCode.D);
@@ -66,6 +82,16 @@ public class Partie {
             pause = !pause;
         }
         pAvant = pMaintenant;
+
+        if(finDePartie){
+            tempsFinDePartie -= deltaTemps;
+
+            if(tempsFinDePartie <= 0){
+                retourAccueil = true;
+            }
+
+            return;
+        }
 
 
         if(!pause){
@@ -100,21 +126,17 @@ public class Partie {
 
             for (PoissonEnnemi poisson : poissonEnnemis) {
                 poisson.update(deltaTemps);
-                boolean collision = gontrand.getDroite()>poisson.getGauche()&&
-                        gontrand.getGauche()<poisson.getDroite()&&
-                        gontrand.getHaut()<poisson.getBas()&&
-                        gontrand.getBas()>poisson.getHaut();
-                if(collision){
+                if(gontrand.collisionneAvec(poisson)){
                     gontrand.perdreVie();
+                    if(gontrand.getVies() <= 0){
+                        finDePartie = true;
+                    }
                 }
             }
 
             //clear poisson ennemi une fois collision
 
-            poissonEnnemis.removeIf(poisson-> gontrand.getDroite()>poisson.getGauche()&&
-                    gontrand.getGauche()<poisson.getDroite()&&
-                    gontrand.getHaut()<poisson.getBas()&&
-                    gontrand.getBas()>poisson.getHaut());
+            poissonEnnemis.removeIf(poisson-> gontrand.collisionneAvec(poisson));
 
 
             for (Projectile projectile : projectiles) {
@@ -150,6 +172,10 @@ public class Partie {
                 }
             }
 
+            if(gontrand.getDroite()>=LARGEUR_NIVEAU){
+                prochainNiveau();
+            }
+
         }
 
     }
@@ -161,7 +187,7 @@ public class Partie {
 
             context.setFont(Font.font(80));
 
-            context.fillText("NIVEAU"+ numeroNiveau,
+            context.fillText("NIVEAU "+ numeroNiveau,
                     MainJavaFX.WIDTH/2-150,
                     MainJavaFX.HEIGHT/2);
         }
@@ -214,6 +240,32 @@ public class Partie {
                     MainJavaFX.HEIGHT / 2.0
             );
         }
+
+        if (finDePartie) {
+            context.setFill(Color.DARKRED);
+            context.fillText("FIN DE PARTIE", MainJavaFX.WIDTH/2-250,MainJavaFX.HEIGHT/2);
+
+        }
+    }
+
+    public void prochainNiveau(){
+        genererCouleurFond();
+        numeroNiveau++;
+        poissonEnnemis.clear();
+        gontrand.setPosition(new Point2D(0,100));
+        gontrand.setVies(4);
+        camera.setPositionCamera(new Point2D(0,0));
+        tempsAffichageNiveau = 4;
+
+    }
+
+    public boolean isRetourAccueil(){
+        return retourAccueil;
+    }
+    public void resetFinDePartie(){
+        retourAccueil = false;
+        finDePartie = false;
+        tempsFinDePartie = 3;
     }
 
     public void drawDebug(GraphicsContext context){
