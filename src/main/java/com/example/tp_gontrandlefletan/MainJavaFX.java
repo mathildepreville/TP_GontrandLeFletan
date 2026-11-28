@@ -21,6 +21,7 @@ import java.io.IOException;
 public class MainJavaFX extends Application {
 
     public static final int WIDTH = 900, HEIGHT = 520;
+    private Partie partie;
     private boolean enPause = false;
     @Override
     public void start(Stage stage) throws IOException {
@@ -35,7 +36,7 @@ public class MainJavaFX extends Application {
         var canvas = new Canvas(WIDTH, HEIGHT);
 
         GraphicsContext context = canvas.getGraphicsContext2D();
-        Partie partie = new Partie();
+        partie = new Partie();
 
         sceneJeu.setOnKeyPressed(e-> {
             Input.setKeyPressed(e.getCode(), true);
@@ -76,6 +77,7 @@ public class MainJavaFX extends Application {
 
         var btnJouer = new Button("Jouer!");
         btnJouer.setOnAction(e -> {
+            partie = new Partie();
             stage.setScene(sceneJeu);//ouvre scene jouer
         });
 

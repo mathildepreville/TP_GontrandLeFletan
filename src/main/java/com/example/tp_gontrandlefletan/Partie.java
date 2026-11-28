@@ -15,6 +15,7 @@ import static com.example.tp_gontrandlefletan.BoiteSardines.CHARGE;
 
 public class Partie {
 
+    private ArrayList<Decor> decors;
     private Color couleurFond;
     private boolean retourAccueil = false;
     private boolean finDePartie = false;
@@ -41,6 +42,9 @@ public class Partie {
     Partie(){
         genererCouleurFond();
 
+        decors = new ArrayList<>();
+        genererDecor();
+
         gontrand = new Gontrand(new Point2D(0,0), //vitesse
                 new Point2D(0,100), //position
                 new Point2D(100,100), // accélération
@@ -51,7 +55,7 @@ public class Partie {
         projectiles = new ArrayList<>();
 
         double x = LARGEUR_NIVEAU * (0.2 + rnd.nextDouble() * 0.6);//pos entre 1/5 et 4/5 au hasard
-        double y = (MainJavaFX.HEIGHT - 83) / 2;
+        double y = (MainJavaFX.HEIGHT - 83.0) / 2.0;
 
         baril = new Baril(new Point2D(x, y));
     }
@@ -63,6 +67,15 @@ public class Partie {
     public void genererCouleurFond(){
         double hue = rnd.nextDouble(190,271);
         couleurFond = Color.hsb(hue, 0.84,1.0);
+    }
+
+    public void genererDecor(){
+        double x = 0;
+        while(x < LARGEUR_NIVEAU){
+            String imageChoisie = "decor"+rnd.nextInt(1,7)+".png";
+            decors.add(new Decor(new Point2D(x,MainJavaFX.HEIGHT-119+10),new Image(imageChoisie)));
+            x += 80+rnd.nextDouble();
+        }
     }
 
     public void update(double deltaTemps){
@@ -182,19 +195,23 @@ public class Partie {
 
     public void draw(GraphicsContext context){
 
+        for(Decor decor : decors){
+            decor.draw(context,camera);
+        }
+
         if(tempsAffichageNiveau > 0){
             context.setFill(Color.WHITE);
 
             context.setFont(Font.font(80));
 
             context.fillText("NIVEAU "+ numeroNiveau,
-                    MainJavaFX.WIDTH/2-150,
-                    MainJavaFX.HEIGHT/2);
+                    MainJavaFX.WIDTH/2.0-150.0,
+                    MainJavaFX.HEIGHT/2.0);
         }
 
         drawDebug(context);
 
-        double largeurVie = 150 * gontrand.getVies()/4;
+        double largeurVie = 150.0 * gontrand.getVies()/4.0;
         context.setFill(Color.WHITE);
         context.fillRect(20,20,largeurVie,20);
         context.setStroke(Color.WHITE);
@@ -243,13 +260,14 @@ public class Partie {
 
         if (finDePartie) {
             context.setFill(Color.DARKRED);
-            context.fillText("FIN DE PARTIE", MainJavaFX.WIDTH/2-250,MainJavaFX.HEIGHT/2);
+            context.fillText("FIN DE PARTIE", MainJavaFX.WIDTH/2.0-250.0,MainJavaFX.HEIGHT/2.0);
 
         }
     }
 
     public void prochainNiveau(){
         genererCouleurFond();
+        genererDecor();
         numeroNiveau++;
         poissonEnnemis.clear();
         gontrand.setPosition(new Point2D(0,100));
