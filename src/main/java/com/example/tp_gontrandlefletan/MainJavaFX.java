@@ -44,14 +44,6 @@ public class MainJavaFX extends Application {
                 partie.lancerProjectile();//lance un projectile lorsque escape est cliquer
                 //avec polymorphisme
             }
-            if (e.getCode() == KeyCode.P) {
-                enPause = !enPause;//inverse la valeur de enPause
-                if (enPause) {
-                    pauseOuJouer(true);
-                } else {
-                    pauseOuJouer(false);
-                }
-            }
 
 
         });
@@ -213,12 +205,5 @@ public class MainJavaFX extends Application {
 
         stage.setScene(sceneMenu);
         stage.show();
-    }
-    private void pauseOuJouer(Boolean pause){
-        if(pause==true){
-
-        }else {
-
-        }
     }
 }
