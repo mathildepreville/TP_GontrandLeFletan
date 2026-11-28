@@ -14,6 +14,9 @@ import java.util.Random;
 import static com.example.tp_gontrandlefletan.BoiteSardines.CHARGE;
 
 public class Partie {
+
+    private int numeroNiveau = 1;
+    private double tempsAffichageNiveau = 4;
     private boolean pause = false;
     private boolean pAvant = false;
     private static final double LARGEUR_NIVEAU = MainJavaFX.WIDTH*8;
@@ -57,7 +60,7 @@ public class Partie {
         dAvant = dMaintenant;
 
         // Activation/désactivation mode Pause
-        boolean pMaintenant = Input.isKeyPressed(KeyCode.SPACE);
+        boolean pMaintenant = Input.isKeyPressed(KeyCode.P);
 
         if(pMaintenant && !pAvant){
             pause = !pause;
@@ -66,6 +69,9 @@ public class Partie {
 
 
         if(!pause){
+            if(tempsAffichageNiveau > 0){
+                tempsAffichageNiveau -= deltaTemps;
+            }
             // Met à jour les déplacements de Gontrand.
             gontrand.update(deltaTemps);
             //faire le camera suivre gontrand
@@ -99,9 +105,9 @@ public class Partie {
                         gontrand.getBas()>poisson.getHaut();
                 if(collision){
                     gontrand.perdreVie();
-                    System.out.println(gontrand.getVies());
                 }
             }
+
             //clear poisson ennemi une fois côté droite de l'image touche le côté gauche de la caméra
 
             poissonEnnemis.removeIf(poisson ->
@@ -129,34 +135,22 @@ public class Partie {
     }
 
     public void draw(GraphicsContext context){
-        if(pause){
-            context.setFill(
-                    Color.rgb(0,0,0,0.4)
-            );
 
-            context.fillRect(
-                    0,
-                    0,
-                    MainJavaFX.WIDTH,
-                    MainJavaFX.HEIGHT
-            );
-
+        if(tempsAffichageNiveau > 0){
             context.setFill(Color.WHITE);
 
-            context.setFont(Font.font(35));
+            context.setFont(Font.font(80));
 
-            context.fillText(
-                    "PAUSE",
-                    MainJavaFX.WIDTH / 2.0 - 60,
-                    MainJavaFX.HEIGHT / 2.0
-            );
+            context.fillText("NIVEAU"+ numeroNiveau,
+                    MainJavaFX.WIDTH/2-150,
+                    MainJavaFX.HEIGHT/2);
         }
 
         drawDebug(context);
 
-        double laergeurVie = 150 * gontrand.getVies()/4;
+        double largeurVie = 150 * gontrand.getVies()/4;
         context.setFill(Color.WHITE);
-        context.fillRect(20,20,laergeurVie,20);
+        context.fillRect(20,20,largeurVie,20);
         context.setStroke(Color.WHITE);
         context.strokeRect(20,20,150,20);
 
@@ -172,6 +166,29 @@ public class Partie {
 
         if (baril != null) {
             baril.draw(context, camera);//dessiner un baril
+        }
+
+        if(pause){
+            context.setFill(
+                    Color.rgb(0,0,0,0.4)
+            );
+
+            context.fillRect(
+                    0,
+                    0,
+                    MainJavaFX.WIDTH,
+                    MainJavaFX.HEIGHT
+            );
+
+            context.setFill(Color.WHITE);
+
+            context.setFont(Font.font(100));
+
+            context.fillText(
+                    "PAUSE",
+                    MainJavaFX.WIDTH / 2.0 -150,
+                    MainJavaFX.HEIGHT / 2.0
+            );
         }
     }
 
