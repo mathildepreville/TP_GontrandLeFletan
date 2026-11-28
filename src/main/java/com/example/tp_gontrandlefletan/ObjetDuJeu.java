@@ -22,7 +22,7 @@ public abstract class ObjetDuJeu {
 
     public void draw(GraphicsContext context,Camera camera){
         var coordonEcran = camera.coordoEcran(position);
-        context.drawImage(image,coordonEcran.getX(),coordonEcran.getY());
+        context.drawImage(image,coordonEcran.getX(),coordonEcran.getY(), taille.getX(), taille.getY());
 
     }
 

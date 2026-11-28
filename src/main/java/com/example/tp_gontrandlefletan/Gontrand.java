@@ -14,17 +14,29 @@ public class Gontrand extends ObjetDuJeu{
     private static final double ACCELERATION_MAX = 1000;
 
     private Image imageOutch;
+
+    private boolean enMouvement = false;
+    private Image imageAvant;
     private Image imageNormale;
     public Gontrand(Point2D velocite, Point2D position, Point2D acceleration, Point2D taille, Image image) {
         super(velocite, position, acceleration, taille, image);
         vies = 4;
         imageNormale = new Image("gontrand.png");
+        imageAvant = new Image("gontrand-avant.png");
         imageOutch = new Image("gontrand-outch.png");
     }
 
     public void draw(GraphicsContext context, Camera camera) {
         if(!invincible|| estVisible()) {
             super.draw(context, camera);
+        }
+
+        if(invincible){
+            image = imageOutch;
+        }else if (enMouvement){
+            image = imageAvant;
+        }else{
+            image = imageNormale;
         }
     }
 
@@ -70,6 +82,10 @@ public class Gontrand extends ObjetDuJeu{
             }
         }
 
+        enMouvement = Input.isKeyPressed(KeyCode.RIGHT)
+                || Input.isKeyPressed(KeyCode.LEFT)
+                || Input.isKeyPressed(KeyCode.UP)
+                || Input.isKeyPressed(KeyCode.DOWN);
     }
 
     public boolean estVisible(){
@@ -130,4 +146,6 @@ public class Gontrand extends ObjetDuJeu{
     public int getVies() {
         return vies;
     }
+
+
 }
