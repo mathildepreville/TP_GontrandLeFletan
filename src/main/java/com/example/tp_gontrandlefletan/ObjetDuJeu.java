@@ -32,6 +32,14 @@ public abstract class ObjetDuJeu {
 
     }
 
+    public boolean collisionneAvec(ObjetDuJeu autre) {
+
+        return getDroite() > autre.getGauche() &&
+                getGauche() < autre.getDroite() &&
+                getBas() > autre.getHaut() &&
+                getHaut() < autre.getBas();
+    }//permet de verifier les collisions
+
     public double getHaut() {
         return position.getY();
     }

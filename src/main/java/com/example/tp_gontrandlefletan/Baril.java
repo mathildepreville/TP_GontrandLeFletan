@@ -50,6 +50,21 @@ public class Baril extends ObjetDuJeu{
     public boolean estUtilise() {
         return utilise;
     }//permet de verifier si le baril a ete utiliser
+
+    public boolean toucherGontrand(Gontrand gontrand) {
+
+        if (utilise) {
+            return false;
+        }
+
+        if (gontrand.collisionneAvec(this)) {
+            utilise = true;
+            image = imageOuvert;
+            return true;
+        }
+
+        return false;
+    }
 }
 
 
