@@ -90,9 +90,10 @@ public class Partie {
                 gontrand.setPosition(new Point2D(gontrand.getPosition().getX(),MainJavaFX.HEIGHT-gontrand.getTaille().getY()));
             }
 
-            // Fait apparaître un nouveau groupe toutes les 1.75 secondes.
+            // Fait apparaître un nouveau groupe
+            double tempsEntreGroupes = 0.75 + 1/ Math.sqrt(numeroNiveau);
             tempDepuisDernierGroupe += deltaTemps;
-            if(tempDepuisDernierGroupe >= 1.75){
+            if(tempDepuisDernierGroupe >= tempsEntreGroupes ){
                 creerGroupEnnemi();
                 tempDepuisDernierGroupe = 0;
             }
@@ -108,10 +109,12 @@ public class Partie {
                 }
             }
 
-            //clear poisson ennemi une fois côté droite de l'image touche le côté gauche de la caméra
+            //clear poisson ennemi une fois collision
 
-            poissonEnnemis.removeIf(poisson ->
-                    poisson.getDroite()<camera.getPositionCamera().getX());
+            poissonEnnemis.removeIf(poisson-> gontrand.getDroite()>poisson.getGauche()&&
+                    gontrand.getGauche()<poisson.getDroite()&&
+                    gontrand.getHaut()<poisson.getBas()&&
+                    gontrand.getBas()>poisson.getHaut());
 
 
             for (Projectile projectile : projectiles) {
@@ -216,8 +219,6 @@ public class Partie {
 
     }
 
-
-    // Crée un groupe de 1 à 5 poissons ennemis.
     private void creerGroupEnnemi(){
         String [] choixImages = {
                 "poisson1.png",
@@ -230,27 +231,31 @@ public class Partie {
         // Position aléatoire à droite de l'écran.
         double x = camera.getPositionCamera().getX()+MainJavaFX.WIDTH+rnd.nextDouble(100,300);
         double y = rnd.nextDouble(MainJavaFX.HEIGHT*0.2, MainJavaFX.HEIGHT*0.8);
-        // Taille de l'image
-        double hauteur = rnd.nextDouble(50,121);
-        double largeur = hauteur*120/104;
-        //Vitesse du poisson
-        double vitesseX = -(100*Math.pow(1,0.33)+200);
-        double vitesseY = rnd.nextDouble(0,100);
-        if(rnd.nextBoolean()){
-            vitesseY = -vitesseY;
-        }
+
         //Création d'un groupe de poisson ennemi
         int tailleGroupe = rnd.nextInt(1,6);
         for(int i = 0; i < tailleGroupe; i++){
-            poissonEnnemis.add(
-                    new PoissonEnnemi(
+            // Taille de l'image
+            double hauteur = rnd.nextDouble(50,121);
+            double largeur = hauteur*120/104;
+
+            //Vitesse du poisson
+            double vitesseX = -(100*Math.pow(numeroNiveau,0.33)+200);
+            double vitesseY = rnd.nextDouble(0,100);
+            if(rnd.nextBoolean()){
+                vitesseY = -vitesseY;
+            }
+
+            PoissonEnnemi poisson = new PoissonEnnemi(
                             new Point2D(vitesseX, vitesseY),
-                            new Point2D(x+i*200, y+i*100),
-                            new Point2D(0, 0),
+                            new Point2D(x+i*200, y+i*150),
+                            new Point2D(-500, 0),
                             new Point2D(largeur, hauteur),
                             new Image(choixImages[rnd.nextInt(choixImages.length)])
-                    )
             );
+
+            poissonEnnemis.add(poisson);
+
         }
     }
 
