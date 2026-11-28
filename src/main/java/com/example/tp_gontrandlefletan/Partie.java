@@ -30,7 +30,7 @@ public class Partie {
     private Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonEnnemis;
     private ArrayList<Projectile> projectiles;
-    private TypeProjectile typeProjectile = TypeProjectile.SARDINES;//commence a lancer des etoiles
+    private TypeProjectile typeProjectile = TypeProjectile.ETOILE;//commence a lancer des etoiles
     private Baril baril;
 
     // Temps écoulé depuis l'apparition du dernier groupe d'ennemis.
@@ -153,6 +153,7 @@ public class Partie {
                     projectile.update(deltaTemps);//update le reste des projectils en appelant leur methode update respective
                 }
             }
+            verifierCollisionsProjectiles();//
             //met a jour les deplacements du baril en sassurant quil disparait lorsque la camerta le depasse
             if (baril != null) {
                 baril.update(deltaTemps);
@@ -208,10 +209,6 @@ public class Partie {
 
         for (Projectile projectile : projectiles) {
             projectile.draw(context, camera);
-            if (projectile instanceof BoiteSardines) {
-                System.out.println("Position écran : " +
-                        camera.coordoEcran(projectile.getPosition()));
-            }
         }//dessiner les projectiles
 
         if (baril != null) {
@@ -333,7 +330,6 @@ public class Partie {
     }
 
     public void lancerProjectile() {
-        System.out.println("Projectile actuel : " + typeProjectile);
 
         switch (typeProjectile) {
 
@@ -379,6 +375,23 @@ public class Partie {
             case SARDINES:
                 typeProjectile = TypeProjectile.ETOILE;
                 break;
+        }
+    }
+
+    private void verifierCollisionsProjectiles() {
+
+        for (Projectile projectile : projectiles) {
+
+            for (int i = 0; i < poissonEnnemis.size(); i++) {
+
+                PoissonEnnemi poisson = poissonEnnemis.get(i);
+
+                if (projectile.collisionneAvec(poisson)) {
+
+                    poissonEnnemis.remove(i);
+                    i--;
+                }
+            }
         }
     }
 

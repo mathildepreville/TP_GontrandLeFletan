@@ -39,8 +39,8 @@ public class MainJavaFX extends Application {
 
         sceneJeu.setOnKeyPressed(e-> {
             Input.setKeyPressed(e.getCode(), true);
-            if (e.getCode() == KeyCode.ESCAPE) {
-                partie.lancerProjectile();//lance un projectile lorsque escape est cliquer
+            if (e.getCode() == KeyCode.SPACE) {
+                partie.lancerProjectile();//lance un projectile lorsque espace est cliquer
                 //avec polymorphisme
             }
 
