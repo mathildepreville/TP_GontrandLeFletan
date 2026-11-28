@@ -60,7 +60,9 @@ public class MainJavaFX extends Application {
                 context.fillRect(0, 0, WIDTH, HEIGHT);
                 if(partie.isRetourAccueil()){
                     stage.setScene(sceneMenu);
+                    partie.resetFinDePartie();
                 }
+                System.out.println(partie.isRetourAccueil());
                 partie.draw(context);
                 dernierTemps = temps;
             }
@@ -173,7 +175,12 @@ public class MainJavaFX extends Application {
         var btnRetour = new Button("Retour");
 
         btnRetour.setOnAction(e -> {
+            System.out.println("RETOUR CLICK");
+
+            System.out.println(sceneMenu);
             stage.setScene(sceneMenu);
+
+            System.out.println(stage.getScene());
         });
 
         //Organisation des élémentas

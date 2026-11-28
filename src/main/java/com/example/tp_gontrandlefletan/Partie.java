@@ -245,6 +245,11 @@ public class Partie {
     public boolean isRetourAccueil(){
         return retourAccueil;
     }
+    public void resetFinDePartie(){
+        retourAccueil = false;
+        finDePartie = false;
+        tempsFinDePartie = 3;
+    }
 
     public void drawDebug(GraphicsContext context){
         if(modeDebug){
